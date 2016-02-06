@@ -1,19 +1,12 @@
 package csci242.assignments.pre.fileinout;
 
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.junit.*;
+import org.junit.rules.*;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import java.io.*;
+
 
 /**
  * Project Assignments.
@@ -63,14 +56,22 @@ public class FileInOutTest {
     }
 
     @Test
-    public void testFileOpening() throws Exception {
+    public void testFileOpeningAndClosing() throws Exception {
 
         FileInOut instance = new FileInOut(inFile.getAbsolutePath(), outFile.getAbsolutePath(), true);
 
         assertNotNull(instance.getInFile());
         assertNotNull(instance.getOutFile());
 
+        assertTrue(instance.inFileIsOpen());
+        assertTrue(instance.outFileIsOpen());
+
+        // Close files
         instance.closeFiles();
+
+        // Assert inFileIsOpen() returns false after closing files
+        assertFalse(instance.inFileIsOpen());
+        assertFalse(instance.outFileIsOpen());
     }
 
     @Test
