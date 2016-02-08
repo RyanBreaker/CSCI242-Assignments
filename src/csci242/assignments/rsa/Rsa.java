@@ -19,7 +19,7 @@ public class Rsa {
      * @param c Character to convert to int.
      * @return The associated int to c.
      */
-    private int charToInt(char c) {
+    private int translateChar(char c) {
         return c - 'A';
     }
 
@@ -27,44 +27,39 @@ public class Rsa {
         String input = "";
         String output = "";
 
+        int arrSize;
+        char[][] pairs;
+        int[] cOfI;
+
         while(files.getInFile().hasNextLine()) {
             input += files.getInFile().nextLine();
         }
 
-        int arrSize = input.length() / 2;
+
+        arrSize = input.length() / 2;
         // Make arrSize even if it isn't already
         if(arrSize % 2 != 0)
             arrSize += 1;
 
-        String[] inputSplit = new String[arrSize];
 
-        int[] pOfI = new int[arrSize];
-        for(int i = 0, a = 0; i < input.length(); i += 2) {
-            int first = charToInt(input.charAt(i));
-            int second = charToInt(input.charAt(i+1));
-
-            pOfI[a++] = Integer.parseInt(String.format("%d%02d", first, second));
+        pairs = new char[arrSize][2];
+        for(int i = 0, a = 0; i < input.length() && a < arrSize; i++) {
+            if(i % 2 == 0)
+                pairs[a][0] = input.charAt(i);
+            else
+                pairs[a++][1] = input.charAt(i);
         }
 
-        for(int p : pOfI) {
-            output += String.format("%d ", mod(e, n, p));
+
+        cOfI = new int[arrSize];
+        for(int i = 0; i < cOfI.length; i++) {
+            cOfI[i] = mod(e, n, translateChar(pairs[i][0]) * 100 + translateChar(pairs[i][1]));
         }
 
-//        int[][] mOfI = new int[arrSize][2];
-//        for(int i = 0, a = 0; i < input.length(); i++) {
-//            // Add the character to the array
-//            mOfI[a][i%2] = charToInt(input.charAt(i));
-//
-//            // Increment array index every other item
-//            if((i + 1) % 2 == 0)
-//                a++;
-//        }
-//
-//        for(int[] a : mOfI) {
-//            int p = Integer.parseInt(String.format("%02d%02d", a[0], a[1]));
-//            int c = mod(e, n, p);
-//            output += String.format("%d ", c);
-//        }
+
+        for(int c : cOfI)
+            output += String.format("%d ", c);
+
 
         System.out.println(output);
     }
@@ -98,5 +93,8 @@ public class Rsa {
 
     public void decrypt(FileInOut files, int d, int n) {
 
+        String input = "";
+        while(files.getInFile().hasNextLine())
+            input += files.getInFile().nextLine();
     }
 }
