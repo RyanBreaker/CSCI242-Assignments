@@ -1,10 +1,6 @@
 package csci242.assignments.rsa;
 
 
-import org.junit.rules.TemporaryFolder;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +12,7 @@ import java.util.Scanner;
  * Created on 2/3/16.
  * @author Ryan Breaker ryan@breaker.rocks
  */
-
-
 public class Rsa {
-
-    /**
-     * Translates the given char down such that the numeric value of ASCII 'A' is the origin at 0.
-     * @param c Character to convert to int.
-     * @return The associated int to c.
-     */
-    private int translateChar(char c) {
-        return c - 'A';
-    }
-
 
     /**
      *
@@ -36,10 +20,10 @@ public class Rsa {
      * @param e First RSA key as an int.
      * @param n Second RSA key as an int.
      */
-    public void encrypt(FileInOut files, int e, int n) {
+    public static void encrypt(FileInOut files, int e, int n) {
 
         // List of Strings, each representing 1 line of the input file.
-        List<String> input = new ArrayList<String>();
+        List<String> input = getFileContents(files.getInFile());
         // List of collections of Pairs, each collection representing 1 line of the input file.
         List<Pair[]> pairs = new ArrayList<Pair[]>();
 
@@ -47,14 +31,6 @@ public class Rsa {
         Scanner     fileIn  = files.getInFile();
         // PrintWriter for writing to the output file.
         PrintWriter fileOut = files.getOutFile();
-
-
-        // Grab each line and put it as a new entry in input.
-        while(fileIn.hasNextLine())
-            input.add(fileIn.nextLine());
-
-        // Cleanup input
-        fileIn.close();
 
 
         // For each line in input, create a new Pair array and add it to `pairs`.
@@ -76,6 +52,7 @@ public class Rsa {
             pairs.add(newPairArray);
         }
 
+
         // TODO: Combine this loop into the previous for efficiency.
         for(Pair[] pairArray : pairs) {
             for(Pair pair : pairArray) {
@@ -93,13 +70,35 @@ public class Rsa {
 
 
     /**
+     *
+     * @param files FileInOut object to be used for I/O.
+     * @param d First RSA key.
+     * @param n Second RSA key.
+     */
+    public static void decrypt(FileInOut files, int d, int n) {
+        List<String> input = getFileContents(files.getInFile());
+        List<Pair[]> pairs = new ArrayList<Pair[]>();
+    }
+
+
+    /**
+     * Translates the given char down such that the numeric value of ASCII 'A' is the origin at 0.
+     * @param c Character to convert to int.
+     * @return The associated int to c.
+     */
+    private static int translateChar(char c) {
+        return c - 'A';
+    }
+
+
+    /**
      * Modulation algorithm for easier handling of massive, exponential numbers.
      * @param e First RSA key
      * @param n Second RSA key
      * @param p Pair's numeric ASCII sum (with 'A' subtracted)
      * @return Returns C = P^e % n
      */
-    private int mod(int e, int n, int p) {
+    private static int mod(int e, int n, int p) {
         int result = 1;
         for(int j = 0; j < e; j++)
             result = (result * p) % n;
@@ -108,37 +107,17 @@ public class Rsa {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        TemporaryFolder tmp = new TemporaryFolder();
-        tmp.create();
-        File input;
-        File output;
-
-        input = tmp.newFile();
-        output = tmp.newFile();
-
-        PrintWriter writer = new PrintWriter(input);
-        writer.write("IDES\nOF\nMARCH\n");
-        writer.close();
-
-        FileInOut fio = new FileInOut(input.getAbsolutePath(), output.getAbsolutePath(), true);
-        Rsa rsa = new Rsa();
-
-        rsa.encrypt(fio, 17, 2773);
-
-        Scanner scanner = new Scanner(output);
-        while(scanner.hasNextLine())
-            System.out.println(scanner.nextLine());
-    }
-
-
-    public void decrypt(FileInOut files, int d, int n) {
-        String input = "";
-
-        Scanner fileIn = files.getInFile();
+    /**
+     * @param fileIn Scanner for reading input file.
+     * @return Returns List of Strings, each element representing each line in the file.
+     */
+    private static List<String> getFileContents(Scanner fileIn) {
+        List<String> fileContents = new ArrayList<String>();
 
         while(fileIn.hasNextLine())
-            input += fileIn.nextLine();
+            fileContents.add(fileIn.nextLine());
+
+        return fileContents;
     }
 }
 
