@@ -119,6 +119,11 @@ public class Rsa {
 
         return fileContents;
     }
+
+
+    private Rsa() {
+        throw new AssertionError("Class Rsa not meant to be instantiated!");
+    }
 }
 
 

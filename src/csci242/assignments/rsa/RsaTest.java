@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Project Assignments.
  * Created on 2/8/16.
@@ -23,13 +25,13 @@ public class RsaTest {
     PrintWriter inputWriter;
     Scanner outputScanner;
 
-    Rsa rsa = new Rsa();
 
     @Before
     public void setUp() throws Exception {
+        tmp.create();
         input  = tmp.newFile();
         output = tmp.newFile();
-        fio = new FileInOut(input.getAbsolutePath(), output.getAbsolutePath(), false);
+        fio = new FileInOut(input.getAbsolutePath(), output.getAbsolutePath(), true);
 
         inputWriter   = new PrintWriter(input);
         outputScanner = new Scanner(output);
@@ -40,6 +42,7 @@ public class RsaTest {
         // Close all files after each test.
         fio.closeFiles();
         inputWriter.close();
+        tmp.delete();
     }
 
     @Test
@@ -50,11 +53,13 @@ public class RsaTest {
 
         Rsa.encrypt(fio, 17, 2773);
 
-        String outputFile = "";
-        while(outputScanner.hasNextLine())
-            outputFile += outputScanner.nextLine();
+        final String expectedOutput = "779\n1983\n2641\n1444\n52\n802\n0\n";
 
-        System.out.println(outputFile);
+        String actualOutput = "";
+        while(outputScanner.hasNextLine())
+            actualOutput += outputScanner.nextLine() + '\n';
+
+        assertEquals("Not equal!", expectedOutput, actualOutput);
     }
 
     @Test
