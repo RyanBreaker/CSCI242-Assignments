@@ -24,47 +24,28 @@ public class Rsa {
 
         // List of Strings, each representing 1 line of the input file.
         List<String> input = getFileContents(files.getInFile());
-        // List of collections of Pairs, each collection representing 1 line of the input file.
-        List<Pair[]> pairs = new ArrayList<Pair[]>();
 
-        // Scanner for reading the input file.
-        Scanner     fileIn  = files.getInFile();
         // PrintWriter for writing to the output file.
         PrintWriter fileOut = files.getOutFile();
 
 
-        // For each line in input, create a new Pair array and add it to `pairs`.
+        // For each line in input, grab each pair, encrypt its ASCII sum, and write it to the output.
         for(String line : input) {
             // Even-out the line's length if currently odd-lengthed by appending 'X'.
             if(line.length() % 2 != 0)
-                line += 'X';
+                line += "X";
 
-            // Size of the new Pair array; its even length / 2.
-            int arrSize = line.length() / 2;
-            // The new Pair array, later added to `pairs`.
-            Pair[] newPairArray = new Pair[arrSize];
-
-            // Divide the line into 2-character pieces and create Pairs out of each piece, adding it to the array.
-            for(int i = 0, a = 0; i < line.length() && a < arrSize; i += 2, a++)
-                newPairArray[a] = new Pair(line.charAt(i), line.charAt(i + 1));
-
-            // Finally, add the array to its Collection.
-            pairs.add(newPairArray);
-        }
-
-
-        // TODO: Combine this loop into the previous for efficiency.
-        for(Pair[] pairArray : pairs) {
-            for(Pair pair : pairArray) {
-                int c = translateChar(pair.first) * 100 + translateChar(pair.second);
-                fileOut.printf("%d\n", mod(e, n, c));
+            // Divide the line into 2-character pieces then translate, encrypt, and write them.
+            for(int i = 0, c; i < line.length(); i += 2) {
+                c = translateChar(line.charAt(i)) * 100 + translateChar(line.charAt(i+1));
+                fileOut.println(mod(e, n, c));
             }
 
-            // Add '0' to indicate a new line in the original file.
+            // '0' to represent new line in original file.
             fileOut.println("0");
         }
 
-        // Close the PrintWriter to flush (write) any new additions to the file.
+        // Close the PrintWriter to flush/write anything not already written to the file.
         fileOut.close();
     }
 
@@ -76,8 +57,31 @@ public class Rsa {
      * @param n Second RSA key.
      */
     public static void decrypt(FileInOut files, int d, int n) {
+
+        // List of Strings, each representing
         List<String> input = getFileContents(files.getInFile());
-        List<Pair[]> pairs = new ArrayList<Pair[]>();
+
+        //
+        List<String> currentBuffer = new ArrayList<String>();
+        //
+        List<String[]> buffers = new ArrayList<String[]>();
+
+
+        // For each line in the input
+        for(String line : input) {
+            //
+            if(line.equals("0")) {
+                buffers.add((String[])currentBuffer.toArray());
+                currentBuffer = new ArrayList<String>();
+            } else {
+                //
+                currentBuffer.add(line);
+            }
+        }
+
+        for(String[] buffer : buffers) {
+
+        }
     }
 
 
@@ -121,17 +125,10 @@ public class Rsa {
     }
 
 
+    /**
+     *
+     */
     private Rsa() {
         throw new AssertionError("Class Rsa not meant to be instantiated!");
-    }
-}
-
-
-class Pair {
-    final char first, second;
-
-    Pair(char first, char second) {
-        this.first = first;
-        this.second = second;
     }
 }

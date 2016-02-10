@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
+
 /**
  * Project Assignments.
  * Created on 2/8/16.
@@ -57,9 +58,11 @@ public class RsaTest {
 
         String actualOutput = "";
         while(outputScanner.hasNextLine())
-            actualOutput += outputScanner.nextLine() + '\n';
+            actualOutput += outputScanner.nextLine() + "\n";
 
-        assertEquals("Not equal!", expectedOutput, actualOutput);
+        // TODO: More tests
+        assertEquals("Actual output doesn't match expected output!",
+                expectedOutput, actualOutput);
     }
 
     @Test
