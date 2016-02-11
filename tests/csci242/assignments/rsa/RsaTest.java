@@ -17,14 +17,15 @@ import static org.junit.Assert.assertEquals;
  * Created on 2/8/16.
  * @author Ryan Breaker
  */
-
 public class RsaTest {
 
-    TemporaryFolder tmp = new TemporaryFolder();
+    final TemporaryFolder tmp = new TemporaryFolder();
     File input, output;
     FileInOut fio;
     PrintWriter inputWriter;
     Scanner outputScanner;
+
+    final Rsa rsa = new Rsa();
 
 
     @Before
@@ -47,26 +48,29 @@ public class RsaTest {
     }
 
     @Test
-    public void testEncrypt() throws Exception {
+    public void testEncryptDecrypt() throws Exception {
         // Write test text and write/close the file
         inputWriter.println("IDESOFMARCH");
         inputWriter.close();
 
-        Rsa.encrypt(fio, 17, 2773);
+        rsa.encrypt(fio, 17, 2773);
 
         final String expectedOutput = "779\n1983\n2641\n1444\n52\n802\n0\n";
 
         String actualOutput = "";
-        while(outputScanner.hasNextLine())
+        while(outputScanner.hasNextLine()) {
             actualOutput += outputScanner.nextLine() + "\n";
+        }
 
-        // TODO: More tests
-        assertEquals("Actual output doesn't match expected output!",
-                expectedOutput, actualOutput);
-    }
+        assertEquals("Actual output doesn't match expected output!", expectedOutput, actualOutput);
 
-    @Test
-    public void testDecrypt() throws Exception {
+        fio = new FileInOut(output.getAbsolutePath(), input.getAbsolutePath(), true);
 
+        rsa.decrypt(fio, 157, 2773);
+
+        Scanner scanner = new Scanner(input);
+        while(scanner.hasNextLine()) {
+            System.out.println(scanner.nextLine());
+        }
     }
 }

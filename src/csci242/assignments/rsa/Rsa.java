@@ -20,7 +20,7 @@ public class Rsa {
      * @param e First RSA key as an int.
      * @param n Second RSA key as an int.
      */
-    public static void encrypt(FileInOut files, int e, int n) {
+    public void encrypt(FileInOut files, int e, int n) {
 
         // List of Strings, each representing 1 line of the input file.
         List<String> input = getFileContents(files.getInFile());
@@ -32,10 +32,11 @@ public class Rsa {
         // For each line in input, grab each pair, encrypt its ASCII sum, and write it to the output.
         for(String line : input) {
             // Even-out the line's length if currently odd-lengthed by appending 'X'.
-            if(line.length() % 2 != 0)
+            if(line.length() % 2 != 0) {
                 line += "X";
+            }
 
-            // Divide the line into 2-character pieces then translate, encrypt, and write them.
+            // Divide the line into 2-character pieces, then translate, combine, encrypt, and write them.
             for(int i = 0, c; i < line.length(); i += 2) {
                 c = translateChar(line.charAt(i)) * 100 + translateChar(line.charAt(i+1));
                 fileOut.println(mod(e, n, c));
@@ -55,45 +56,61 @@ public class Rsa {
      * @param files FileInOut object to be used for I/O.
      * @param d First RSA key.
      * @param n Second RSA key.
+     * TODO: Clean up this method.
      */
-    public static void decrypt(FileInOut files, int d, int n) {
+    public void decrypt(FileInOut files, int d, int n) {
 
         // List of Strings, each representing
         List<String> input = getFileContents(files.getInFile());
 
-        //
-        List<String> currentBuffer = new ArrayList<String>();
-        //
-        List<String[]> buffers = new ArrayList<String[]>();
-
+        PrintWriter fileOut = files.getOutFile();
 
         // For each line in the input
         for(String line : input) {
-            //
+            int m = 0;
+
+            // If the line is just "0", it's a new line in the original file.
             if(line.equals("0")) {
-                buffers.add((String[])currentBuffer.toArray());
-                currentBuffer = new ArrayList<String>();
-            } else {
-                //
-                currentBuffer.add(line);
+                fileOut.println();
+                // Skip to next iteration
+                continue;
             }
+
+            //
+            try {
+                m = mod(d, n, Integer.parseInt(line));
+            } catch(NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            char firstChar  = translateCharReverse(m / 100);
+            char secondChar = translateCharReverse(m % 100);
+
+            fileOut.print(firstChar);
+            fileOut.print(secondChar);
         }
 
-        for(String[] buffer : buffers) {
-
-        }
+        fileOut.close();
     }
 
 
     /**
      * Translates the given char down such that the numeric value of ASCII 'A' is the origin at 0.
-     * @param c Character to convert to int.
-     * @return The associated int to c.
+     * @param c The char to translate.
+     * @return The translated int from c.
      */
-    private static int translateChar(char c) {
+    private int translateChar(char c) {
         return c - 'A';
     }
 
+    /**
+     * Reverses the effect of translateChar, translating n up and returning a char.
+     * @param n The number to translate.
+     * @return The translated char from n.
+     */
+    private char translateCharReverse(int n) {
+        return (char)(n + 'A');
+    }
 
     /**
      * Modulation algorithm for easier handling of massive, exponential numbers.
@@ -102,33 +119,28 @@ public class Rsa {
      * @param p Pair's numeric ASCII sum (with 'A' subtracted)
      * @return Returns C = P^e % n
      */
-    private static int mod(int e, int n, int p) {
+    private int mod(int e, int n, int p) {
         int result = 1;
-        for(int j = 0; j < e; j++)
+        for(int j = 0; j < e; j++) {
             result = (result * p) % n;
+        }
 
         return result;
     }
 
 
     /**
+     * 
      * @param fileIn Scanner for reading input file.
      * @return Returns List of Strings, each element representing each line in the file.
      */
-    private static List<String> getFileContents(Scanner fileIn) {
+    private List<String> getFileContents(Scanner fileIn) {
         List<String> fileContents = new ArrayList<String>();
 
-        while(fileIn.hasNextLine())
+        while(fileIn.hasNextLine()) {
             fileContents.add(fileIn.nextLine());
+        }
 
         return fileContents;
-    }
-
-
-    /**
-     *
-     */
-    private Rsa() {
-        throw new AssertionError("Class Rsa not meant to be instantiated!");
     }
 }
