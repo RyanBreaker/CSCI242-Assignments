@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 
 /**
- * Project Assignments.
+ *
  * Created on 2/3/16.
  * @author Ryan Breaker ryan@breaker.rocks
  */
@@ -22,15 +22,11 @@ public class Rsa {
      */
     public void encrypt(FileInOut files, int e, int n) {
 
-        // List of Strings, each representing 1 line of the input file.
-        List<String> input = getFileContents(files.getInFile());
-
         // PrintWriter for writing to the output file.
         PrintWriter fileOut = files.getOutFile();
 
-
         // For each line in input, grab each pair, encrypt its ASCII sum, and write it to the output.
-        for(String line : input) {
+        for(String line : getFileContents(files.getInFile())) {
             // Even-out the line's length if currently odd-lengthed by appending 'X'.
             if(line.length() % 2 != 0) {
                 line += "X";
@@ -56,17 +52,14 @@ public class Rsa {
      * @param files FileInOut object to be used for I/O.
      * @param d First RSA key.
      * @param n Second RSA key.
-     * TODO: Clean up this method.
      */
     public void decrypt(FileInOut files, int d, int n) {
 
-        // List of Strings, each representing
-        List<String> input = getFileContents(files.getInFile());
-
+        //
         PrintWriter fileOut = files.getOutFile();
 
-        // For each line in the input
-        for(String line : input) {
+        // For each line in the input,
+        for(String line : getFileContents(files.getInFile())) {
             int m = 0;
 
             // If the line is just "0", it's a new line in the original file.
@@ -83,13 +76,15 @@ public class Rsa {
                 e.printStackTrace();
             }
 
-            char firstChar  = translateCharReverse(m / 100);
-            char secondChar = translateCharReverse(m % 100);
+            //
+            Character firstChar  = translateCharReverse(m / 100);
+            Character secondChar = translateCharReverse(m % 100);
 
-            fileOut.print(firstChar);
-            fileOut.print(secondChar);
+            //
+            fileOut.print(firstChar.toString() + secondChar.toString());
         }
 
+        //
         fileOut.close();
     }
 
@@ -111,6 +106,7 @@ public class Rsa {
     private char translateCharReverse(int n) {
         return (char)(n + 'A');
     }
+
 
     /**
      * Modulation algorithm for easier handling of massive, exponential numbers.
