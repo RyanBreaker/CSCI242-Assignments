@@ -3,23 +3,47 @@ package csci242.assignments.rsa;
 import java.io.*;
 import java.util.*;
 
+// TODO: Change how FileNotFound exceptions are handled, centralize to File object creation.
+// TODO: Finish documentation per Knautz's coding guidelines.
+
 /**
- * Project Assignments.
- * Created on 2/3/16.
+ * A program to encrypt and decrypt a file using the RSA encryption algorithm.
+ * <p>
+ * The Rsa class implements the functionality of the RSA algirithm.
  *
- * @author breaker
+ * @author Ryan Breaker
+ * @edu.uwp.cs.242.course CSCI242 - Computer Science II
+ * @edu.uwp.cs.242.section 001
+ * @edu.uwp.cs.242.assignment 1
+ * @bugs None
  */
-
-
 public class FileInOut {
 
+    /**
+     * The current filename of the
+     */
     private String inFilename;
+    /**
+     *
+     */
     private String outFilename;
 
+    /**
+     *
+     */
     private boolean inOpen  = false;
+    /**
+     *
+     */
     private boolean outOpen = false;
 
+    /**
+     *
+     */
     private Scanner inFileScanner;
+    /**
+     *
+     */
     private PrintWriter outFileWriter;
 
 
@@ -89,7 +113,7 @@ public class FileInOut {
     //region Open methods
     /**
      * Meta method for opening both files.
-     * @throws FileNotFoundException Thrown on nonexistant file or file is unwriteable.
+     * @throws FileNotFoundException Thrown on nonexistant input file or output file is unwriteable.
      */
     public void openFiles() throws FileNotFoundException {
         openInFile();
@@ -106,7 +130,7 @@ public class FileInOut {
         }
 
         File inFile   = new File(inFilename);
-        inFileScanner = new Scanner(inFile);
+        inFileScanner = new Scanner(inFile);  // Potential throw
         inOpen = true;
     }
 

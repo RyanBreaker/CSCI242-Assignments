@@ -8,9 +8,15 @@ import java.util.Scanner;
 
 
 /**
+ * A program to encrypt and decrypt a file using the RSA encryption algorithm.
+ * <p>
+ * The Rsa class implements the functionality of the RSA algirithm.
  *
- * Created on 2/3/16.
- * @author Ryan Breaker ryan@breaker.rocks
+ * @author Ryan Breaker
+ * @edu.uwp.cs.242.course CSCI242 - Computer Science II
+ * @edu.uwp.cs.242.section 001
+ * @edu.uwp.cs.242.assignment 1
+ * @bugs None
  */
 public class Rsa {
 
@@ -55,6 +61,10 @@ public class Rsa {
      */
     public void decrypt(FileInOut files, int d, int n) {
 
+        if (!(files.inFileIsOpen() || files.outFileIsOpen())) {
+            files.openFiles();
+        }
+
         //
         PrintWriter fileOut = files.getOutFile();
 
@@ -84,7 +94,7 @@ public class Rsa {
             fileOut.print(firstChar.toString() + secondChar.toString());
         }
 
-        //
+        // Flush/write unwritten additions to the file and close it.
         fileOut.close();
     }
 
