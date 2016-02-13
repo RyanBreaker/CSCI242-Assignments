@@ -1,4 +1,7 @@
 before_script:
-    - apt-get update && apt-get install -y -qq openjdk-8-jdk
+    - apt-get update && apt-get install -y openjdk-8-jdk junit
     - which java
     - java -version
+
+junit:
+    - echo foo
