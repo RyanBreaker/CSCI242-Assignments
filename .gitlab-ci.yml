@@ -4,4 +4,5 @@ before_script:
     - java -version
 
 junit:
-    - echo foo
+    script:
+        - echo foo
