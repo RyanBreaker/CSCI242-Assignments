@@ -1,6 +1,7 @@
 package csci242.assignments.rsa;
 
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +17,21 @@ import java.util.Scanner;
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
  * @edu.uwp.cs.242.section 001
  * @edu.uwp.cs.242.assignment 1
- * @bugs None
+ * @bugs On bad input, a NumberFormatException will be thrown in Rsa::decrypt().
  */
 public class Rsa {
 
     /**
+     * Encrypts the inFile from the given FileInOut with
+     * the given keys and writes it to the outFile.
      *
      * @param files FileInOut object to be used.
      * @param e First RSA key as an int.
      * @param n Second RSA key as an int.
      */
     public void encrypt(FileInOut files, int e, int n) {
+
+        
 
         // PrintWriter for writing to the output file.
         PrintWriter fileOut = files.getOutFile();
@@ -48,21 +53,34 @@ public class Rsa {
             fileOut.println("0");
         }
 
-        // Close the PrintWriter to flush/write anything not already written to the file.
-        fileOut.close();
+        // Close both files, effectively flushing remaining ouput.
+        files.closeFiles();
     }
 
 
     /**
+     * Decrypts the inFile from the given FileInOut with
+     * the given keys and writes it the the outFile.
+     * <p>
+     * If either the input or output are closed, files.openFiles()
+     * gets called which may throw a FileNotFoundException if
+     * either the input does not exist or cannot be read or the
+     * output cannot be written to.
      *
      * @param files FileInOut object to be used for I/O.
      * @param d First RSA key.
      * @param n Second RSA key.
+     * @throws FileNotFoundException Thrown when
      */
-    public void decrypt(FileInOut files, int d, int n) {
+    public void decrypt(FileInOut files, int d, int n) throws FileNotFoundException {
 
-        if (!(files.inFileIsOpen() || files.outFileIsOpen())) {
-            files.openFiles();
+        // Open the files if they aren't already open.
+        if (!files.inFileIsOpen()) {
+            files.openInFile();
+        }
+
+        if(!files.outFileIsOpen()) {
+            files.openOutFile();
         }
 
         //
@@ -70,21 +88,18 @@ public class Rsa {
 
         // For each line in the input,
         for(String line : getFileContents(files.getInFile())) {
-            int m = 0;
+            int m;
 
             // If the line is just "0", it's a new line in the original file.
             if(line.equals("0")) {
+                // Write a new line.
                 fileOut.println();
                 // Skip to next iteration
                 continue;
             }
 
-            //
-            try {
-                m = mod(d, n, Integer.parseInt(line));
-            } catch(NumberFormatException e) {
-                e.printStackTrace();
-            }
+            // Warning: May throw NumberFormatException on bad input
+            m = mod(d, n, Integer.parseInt(line));
 
             //
             Character firstChar  = translateCharReverse(m / 100);
@@ -94,8 +109,24 @@ public class Rsa {
             fileOut.print(firstChar.toString() + secondChar.toString());
         }
 
-        // Flush/write unwritten additions to the file and close it.
-        fileOut.close();
+        // Close both files, effectively flushing remaining ouput.
+        files.closeFiles();
+    }
+
+
+    /**
+     *
+     * @param files The FileInOut object to check.
+     * @throws FileNotFoundException
+     */
+    private void checkFiles(FileInOut files) throws FileNotFoundException {
+        if(!files.inFileIsOpen()) {
+            files.openInFile();
+        }
+
+        if(!files.outFileIsOpen()) {
+            files.openOutFile();
+        }
     }
 
 
