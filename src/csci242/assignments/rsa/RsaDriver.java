@@ -21,7 +21,8 @@ public class RsaDriver {
         final String encryptedTextFilename = "testFiles/encryptedFile.txt";
         final String decryptedTextFilename = "testFiles/decryptedFile.txt";
 
-        FileInOut fio = new FileInOut(plainTextFilename, encryptedTextFilename, true);
+        FileInOut fio = new FileInOut(plainTextFilename,
+                                      encryptedTextFilename, true);
         Rsa rsa = new Rsa();
 
         // Encrypt plainTextFilename contents

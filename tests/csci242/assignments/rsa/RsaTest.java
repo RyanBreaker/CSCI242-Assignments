@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 
 
 /**
@@ -19,58 +19,71 @@ import static org.junit.Assert.assertEquals;
  */
 public class RsaTest {
 
-    final TemporaryFolder tmp = new TemporaryFolder();
-    File input, output;
+    TemporaryFolder tmp = new TemporaryFolder();
+
+    File original;
+    File encrypted;
+    File decrypted;
+
     FileInOut fio;
-    PrintWriter inputWriter;
-    Scanner outputScanner;
 
+    final String testString = "HELLO\nFOOBAR\nILIKEPIE\n";
+    final String testDecrypted = "HELLOX\nFOOBAR\nILIKEPIE\n";
+
+    final int e = 1007;
+    final int d = 975;
+    final int n = 2773;
+
+    // Only a single instance is needed for any test.
     final Rsa rsa = new Rsa();
-
 
     @Before
     public void setUp() throws Exception {
-        tmp.create();
-        input  = tmp.newFile();
-        output = tmp.newFile();
-        fio = new FileInOut(input.getAbsolutePath(), output.getAbsolutePath(), true);
+        PrintWriter writer;
 
-        inputWriter   = new PrintWriter(input);
-        outputScanner = new Scanner(output);
+        tmp.create();
+
+        original = tmp.newFile();
+        encrypted = tmp.newFile();
+        decrypted = tmp.newFile();
+
+        // Write test text to original file
+        writer = new PrintWriter(original);
+        writer.write(testString);
+        writer.close();
+
+        fio = new FileInOut(original.getAbsolutePath(),
+                encrypted.getAbsolutePath(), true);
     }
 
     @After
     public void tearDown() throws Exception {
-        // Close all files after each test.
         fio.closeFiles();
-        inputWriter.close();
         tmp.delete();
     }
 
+
     @Test
     public void testEncryptDecrypt() throws Exception {
-        // Write test text and write/close the file
-        inputWriter.println("IDESOFMARCH");
-        inputWriter.close();
+        Scanner reader;
+        String actualDecryptedText = "";
 
-        rsa.encrypt(fio, 17, 2773);
+        rsa.encrypt(fio, e, n);
 
-        final String expectedOutput = "779\n1983\n2641\n1444\n52\n802\n0\n";
+        fio.closeFiles();
 
-        String actualOutput = "";
-        while(outputScanner.hasNextLine()) {
-            actualOutput += outputScanner.nextLine() + "\n";
+        fio.setInFilename(encrypted.getAbsolutePath());
+        fio.setOutFilename(decrypted.getAbsolutePath());
+
+        fio.openFiles();
+
+        rsa.decrypt(fio, d, n);
+
+        reader = new Scanner(decrypted);
+        while(reader.hasNextLine()) {
+            actualDecryptedText += reader.nextLine() + "\n";
         }
 
-        assertEquals("Actual output doesn't match expected output!", expectedOutput, actualOutput);
-
-        fio = new FileInOut(output.getAbsolutePath(), input.getAbsolutePath(), true);
-
-        rsa.decrypt(fio, 157, 2773);
-
-        Scanner scanner = new Scanner(input);
-        while(scanner.hasNextLine()) {
-            System.out.println(scanner.nextLine());
-        }
+        assertEquals(testDecrypted, actualDecryptedText);
     }
 }
