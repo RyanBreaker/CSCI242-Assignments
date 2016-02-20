@@ -152,7 +152,7 @@ public class Rsa {
      * @return  The translated int from c.
      */
     private int translateChar(char c) {
-        return c - 'A';
+        return c - 'A' + 1;
     }
 
     /**
@@ -164,7 +164,7 @@ public class Rsa {
      * @return  The translated char from n.
      */
     private char translateCharReverse(int n) {
-        return (char)(n + 'A');
+        return (char)(n + 'A' - 1);
     }
 
 
