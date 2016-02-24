@@ -15,6 +15,7 @@ public class Car extends PassengerVehicle {
 
     protected int numOfDoors;
 
+
     public Car() {}
 
     public Car(int vehicleId, String manufacturer, String model,
@@ -40,9 +41,18 @@ public class Car extends PassengerVehicle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Car car = (Car) o;
 
         return numOfDoors == car.numOfDoors;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + numOfDoors;
+        return result;
     }
 }

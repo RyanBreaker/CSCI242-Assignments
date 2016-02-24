@@ -30,4 +30,24 @@ public class TransportationVehicle extends Vehicle {
     public void setLoadCapacity(int loadCapacity) {
         this.loadCapacity = loadCapacity;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        TransportationVehicle that = (TransportationVehicle) o;
+
+        return loadCapacity == that.loadCapacity;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + loadCapacity;
+        return result;
+    }
 }

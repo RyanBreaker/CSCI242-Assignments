@@ -4,10 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 /**
  * Short description.
- * <p/>
+ * <p>
  * Long description.
  *
  * @author Ryan Breaker
@@ -20,9 +21,10 @@ public class VehicleTest {
 
     Vehicle vehicle;
 
+
     @Before
     public void setUp() throws Exception {
-        vehicle = new Vehicle(1, "Chevy", "Sonic");
+        vehicle = VehicleTestData.randomVehicle();
     }
 
 
@@ -39,5 +41,31 @@ public class VehicleTest {
         assertEquals(newId, vehicle.getVehicleId());
         assertEquals(newManufacturer, vehicle.getManufacturer());
         assertEquals(newModel, vehicle.getModel());
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Vehicle otherVehicle = vehicle;
+
+        assertEquals(vehicle, otherVehicle);
+
+        otherVehicle = new Vehicle(vehicle.getVehicleId(),
+                vehicle.getManufacturer(), vehicle.getModel());
+
+        assertEquals(vehicle, otherVehicle);
+
+        otherVehicle = VehicleTestData.randomVehicle();
+
+        assertFalse(vehicle.equals(otherVehicle));
+        assertFalse(vehicle.equals(new Vehicle()));
+    }
+
+    @Test
+    public void testHashcode() throws Exception {
+        Vehicle otherVehicle = new Vehicle(vehicle);
+
+        assertEquals(vehicle.hashCode(), otherVehicle.hashCode());
+
+        assertFalse(vehicle.hashCode() == VehicleTestData.randomVehicle().hashCode());
     }
 }
