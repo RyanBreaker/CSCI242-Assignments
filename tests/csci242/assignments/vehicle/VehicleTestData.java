@@ -13,7 +13,7 @@ import java.util.Random;
  * @edu.uwp.cs.242.assignment 2
  * @bugs None
  */
-public class VehicleTestData {
+public final class VehicleTestData {
 
     private static Random rand = new Random();
 
@@ -56,6 +56,12 @@ public class VehicleTestData {
     //endregion
 
 
+    /**
+     * Don't let anyone instantiate this class.
+     */
+    private VehicleTestData() {}
+
+
     public static Vehicle randomVehicle() {
         int manu = rand.nextInt(MANUFACTURERS.length);
         int model = rand.nextInt(MODELS[manu].length);
@@ -66,7 +72,7 @@ public class VehicleTestData {
 
     public static PassengerVehicle randomPassengerVehicle() {
         PassengerVehicle vehicle = new PassengerVehicle(randomVehicle());
-        vehicle.numOfPassengers = rand.nextInt(4) + 2;  // Range of 2-6
+        vehicle.numOfPassengers = rand.nextInt(6) + 2;  // Range of 2-8
         return vehicle;
     }
 }

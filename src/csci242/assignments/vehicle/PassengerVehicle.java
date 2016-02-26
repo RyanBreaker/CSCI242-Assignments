@@ -28,6 +28,11 @@ public class PassengerVehicle extends Vehicle {
         super(vehicle);
     }
 
+    public PassengerVehicle(PassengerVehicle vehicle) {
+        super(vehicle);
+        numOfPassengers = vehicle.numOfPassengers;
+    }
+
 
     public int getNumOfPassengers() {
         return numOfPassengers;

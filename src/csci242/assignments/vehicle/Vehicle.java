@@ -1,9 +1,9 @@
 package csci242.assignments.vehicle;
 
 /**
- * Short description.
+ *
  * <p>
- * Long description.
+ *
  *
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
@@ -11,7 +11,7 @@ package csci242.assignments.vehicle;
  * @edu.uwp.cs.242.assignment 2
  * @bugs None
  */
-public class Vehicle {
+public class Vehicle implements Comparable<Vehicle> {
 
     /**
      * The VIN of the Vehicle.
@@ -27,6 +27,7 @@ public class Vehicle {
     protected String model = "";
 
 
+    //region Constructors
     /**
      * Empty constructor, initializes vehicleId to 1 and the other String
      * fields to an empty String.
@@ -49,15 +50,16 @@ public class Vehicle {
 
     /**
      * In lieu of overriding the infamous Object.clone(), this constructor
-     * can be used instead to create a clone/copy of an existing method.
+     * can be used instead to deep copy an existing instance.
      *
-     * @param clonee The Vehicle to clone.
+     * @param vehicle The Vehicle to copy.
      */
-    public Vehicle(Vehicle clonee) {
-        vehicleId = clonee.getVehicleId();
-        manufacturer = clonee.manufacturer;
-        model = clonee.model;
+    public Vehicle(Vehicle vehicle) {
+        vehicleId = vehicle.getVehicleId();
+        manufacturer = vehicle.manufacturer;
+        model = vehicle.model;
     }
+    //endregion
 
 
     //region Getters & Setters
@@ -87,6 +89,7 @@ public class Vehicle {
     //endregion
 
 
+    // region Overrides
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,4 +119,14 @@ public class Vehicle {
                 ", model='" + model + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Vehicle o) {
+        if(o.vehicleId > vehicleId)
+            return 1;
+        if(o.vehicleId < vehicleId)
+            return -1;
+        return 0;
+    }
+    //endregion
 }

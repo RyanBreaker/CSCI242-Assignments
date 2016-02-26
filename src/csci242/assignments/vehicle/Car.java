@@ -13,7 +13,7 @@ package csci242.assignments.vehicle;
  */
 public class Car extends PassengerVehicle {
 
-    protected int numOfDoors;
+    protected int numOfDoors = 2;
 
 
     public Car() {}
