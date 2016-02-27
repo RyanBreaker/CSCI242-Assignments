@@ -13,14 +13,27 @@ package csci242.assignments.vehicle;
  */
 public class TransportationVehicle extends Vehicle {
 
-    protected int loadCapacity;
+    protected int loadCapacity = 2;
 
 
+    //region Constructors
     public TransportationVehicle() {}
 
     public TransportationVehicle(int loadCapacity) {
         this.loadCapacity = loadCapacity;
     }
+
+    protected TransportationVehicle(int vehicleId, String manufacturer,
+                                    String model, int loadCapacity) {
+        super(vehicleId, manufacturer, model);
+        this.loadCapacity = loadCapacity;
+    }
+
+    public TransportationVehicle(TransportationVehicle vehicle) {
+        super(vehicle);
+        loadCapacity = vehicle.loadCapacity;
+    }
+    //endregion
 
 
     public int getLoadCapacity() {

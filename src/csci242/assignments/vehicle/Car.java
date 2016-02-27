@@ -16,22 +16,61 @@ public class Car extends PassengerVehicle {
     protected int numOfDoors = 2;
 
 
+    /**
+     * Empty constructor, numOfDoors defaults to 2.
+     */
     public Car() {}
 
+    /**
+     * Copies a Vehicle's fields' values to the new Car's.
+     *
+     * @param vehicle The Vehicle to pass up the chain.
+     */
+    public Car(Vehicle vehicle) {
+        super(vehicle);
+    }
+
+    /**
+     * Cloning constructor, takes an existing Car and copies its fields'
+     * values into its own.
+     *
+     * @param car The Car to duplicate.
+     */
+    public Car(Car car) {
+        super(car);
+        numOfDoors = car.numOfDoors;
+    }
+
+    /**
+     *
+     *
+     * @param vehicleId VIN of the vehicle.
+     * @param manufacturer Manufacturer of the vehicle.
+     * @param model Model of the vehicle.
+     * @param numOfPassengers Number of passengers the vehicle can accomodate.
+     * @param numOfDoors Number of doors the vehicle has.
+     */
     public Car(int vehicleId, String manufacturer, String model,
                int numOfPassengers, int numOfDoors) {
-        this.vehicleId = vehicleId;
-        this.manufacturer = manufacturer;
-        this.model = model;
-        this.numOfPassengers = numOfPassengers;
+        super(vehicleId, manufacturer, model, numOfPassengers);
         this.numOfDoors = numOfDoors;
     }
 
 
+    /**
+     * Returns the number of doors this Car has.
+     *
+     * @return The number of doors this Car has.
+     */
     public int getNumOfDoors() {
         return numOfDoors;
     }
 
+    /**
+     * Sets the number of doors this Car has.
+     *
+     * @param numOfDoors the number of doors to set.
+     */
     public void setNumOfDoors(int numOfDoors) {
         this.numOfDoors = numOfDoors;
     }
@@ -46,7 +85,6 @@ public class Car extends PassengerVehicle {
         Car car = (Car) o;
 
         return numOfDoors == car.numOfDoors;
-
     }
 
     @Override

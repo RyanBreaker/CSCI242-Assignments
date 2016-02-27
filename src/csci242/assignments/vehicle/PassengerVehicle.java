@@ -15,12 +15,30 @@ package csci242.assignments.vehicle;
 
 public class PassengerVehicle extends Vehicle {
 
+    /**
+     * The number of passengers the PassengerVehicle can accomodate.
+     */
     protected int numOfPassengers = 2;
 
 
+    /**
+     *
+     */
     public PassengerVehicle() {}
 
+    /**
+     * Sets the
+     *
+     * @param numOfPassengers The number of passengers the PassengerVehicle can
+     *                        accomodate.
+     */
     public PassengerVehicle(int numOfPassengers) {
+        this.numOfPassengers = numOfPassengers;
+    }
+
+    protected PassengerVehicle(int vehicleId, String manufacturer,
+                               String model, int numOfPassengers) {
+        super(vehicleId, manufacturer, model);
         this.numOfPassengers = numOfPassengers;
     }
 

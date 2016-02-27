@@ -35,11 +35,11 @@ public class Vehicle implements Comparable<Vehicle> {
     public Vehicle() {}
 
     /**
+     * Sets the VIN, manufacturer, and model of the Vehicle on instantiation.
      *
-     *
-     * @param vehicleId
-     * @param manufacturer
-     * @param model
+     * @param vehicleId VIN of the Vehicle.
+     * @param manufacturer Manufacturer of the Vehicle.
+     * @param model Model of the Vehicle.
      */
     public Vehicle(int vehicleId, String manufacturer, String model) {
         this.vehicleId = vehicleId;
@@ -63,26 +63,56 @@ public class Vehicle implements Comparable<Vehicle> {
 
 
     //region Getters & Setters
+    /**
+     * Returns the Vehicle's VIN.
+     *
+     * @return The Vehicle's VIN.
+     */
     public int getVehicleId() {
         return vehicleId;
     }
 
+    /**
+     * Sets a new VIN for the Vehicle.
+     *
+     * @param vehicleId New VIN of the Vehicle.
+     */
     public void setVehicleId(int vehicleId) {
         this.vehicleId = vehicleId;
     }
 
+    /**
+     * Returns the Vehicle's manufacturer.
+     *
+     * @return The Vehicle's manufacturer.
+     */
     public String getManufacturer() {
         return manufacturer;
     }
 
+    /**
+     * Changes the manufaturer of the Vehicle to the given.
+     *
+     * @param manufacturer New manufacturer of the Vehicle.
+     */
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
+    /**
+     * Returns the Vehicle's model.
+     *
+     * @return The Vehicle's model.
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * Changes the model of the Vehicle to the given .
+     *
+     * @param model New model of the Vehicle.
+     */
     public void setModel(String model) {
         this.model = model;
     }
@@ -100,7 +130,6 @@ public class Vehicle implements Comparable<Vehicle> {
         if (vehicleId != vehicle.vehicleId) return false;
         if (!manufacturer.equals(vehicle.manufacturer)) return false;
         return model.equals(vehicle.model);
-
     }
 
     @Override
