@@ -15,6 +15,7 @@ public class Car extends PassengerVehicle {
 
     protected int numOfDoors = 2;
 
+    protected final String TYPE = "CAR";
 
     /**
      * Empty constructor, numOfDoors defaults to 2.
@@ -92,5 +93,11 @@ public class Car extends PassengerVehicle {
         int result = super.hashCode();
         result = 31 * result + numOfDoors;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        String s = replaceTYPE(super.toString(), super.TYPE, TYPE);
+        return String.format("%s Number of doors: %d", s, numOfDoors);
     }
 }

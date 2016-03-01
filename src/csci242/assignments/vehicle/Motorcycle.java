@@ -13,15 +13,16 @@ package csci242.assignments.vehicle;
  */
 public class Motorcycle extends PassengerVehicle {
 
-    protected int weight;
+    /**
+     * The weight of the Motorcycle
+     */
+    protected int weight = 400;
 
 
     public Motorcycle() {}
 
     public Motorcycle(int vehicleId, String manufacturer, String model, int weight) {
-        this.vehicleId = vehicleId;
-        this.manufacturer = manufacturer;
-        this.model = model;
+        super(vehicleId, manufacturer, model, 1);
         this.weight = weight;
     }
 
@@ -44,7 +45,6 @@ public class Motorcycle extends PassengerVehicle {
         Motorcycle that = (Motorcycle) o;
 
         return weight == that.weight;
-
     }
 
     @Override
@@ -52,5 +52,11 @@ public class Motorcycle extends PassengerVehicle {
         int result = super.hashCode();
         result = 31 * result + weight;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        String s = replaceTYPE(super.toString(), super.TYPE, TYPE);
+        return TYPE + String.format("%s Weight: %d", s, weight);
     }
 }

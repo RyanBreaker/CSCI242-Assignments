@@ -20,7 +20,7 @@ public class Inventory {
 
 
     public static void main(String args[]) {
-
+        System.out.println(new Car(1001, "Ford", "Fusion", 5, 4));
     }
 
 
@@ -28,5 +28,9 @@ public class Inventory {
 
     public void report() {}
 
-    public void printList(ArrayList<Vehicle> al) {}
+    public void printList(ArrayList<Vehicle> al) {
+        for(Vehicle v : al) {
+            System.out.println(v);
+        }
+    }
 }

@@ -26,10 +26,16 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     protected String model = "";
 
+    protected final String TYPE = "VEHICLE";
+
+
+    protected final String replaceTYPE(String line, String oldTYPE, String newTYPE) {
+        return newTYPE + line.substring(oldTYPE.length());
+    }
 
     //region Constructors
     /**
-     * Empty constructor, initializes vehicleId to 1 and the other String
+     * Empty constructor, initializes vehicleId to 1 and the the String
      * fields to an empty String.
      */
     public Vehicle() {}
@@ -119,7 +125,7 @@ public class Vehicle implements Comparable<Vehicle> {
     //endregion
 
 
-    // region Overrides
+    //region Overrides
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,21 +147,17 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     @Override
-    public String toString() {
-        return "Vehicle{" +
-                "vehicleId=" + vehicleId +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                '}';
-    }
-
-    @Override
     public int compareTo(Vehicle o) {
         if(o.vehicleId > vehicleId)
             return 1;
         if(o.vehicleId < vehicleId)
             return -1;
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s %s VIN: %d", TYPE, manufacturer, model, vehicleId);
     }
     //endregion
 }

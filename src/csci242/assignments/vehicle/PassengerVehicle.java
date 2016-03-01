@@ -20,6 +20,7 @@ public class PassengerVehicle extends Vehicle {
      */
     protected int numOfPassengers = 2;
 
+    protected final String TYPE = "PASSENGERVEHICLE";
 
     /**
      *
@@ -78,5 +79,11 @@ public class PassengerVehicle extends Vehicle {
         int result = super.hashCode();
         result = 31 * result + numOfPassengers;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        String s = replaceTYPE(super.toString(), super.TYPE, TYPE);
+        return String.format("%s Number of passengers: %d", s, numOfPassengers);
     }
 }
