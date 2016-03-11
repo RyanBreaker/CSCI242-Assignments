@@ -1,7 +1,8 @@
 package csci242.assignments.vehicle;
 
 /**
- * Short description.
+ * Implement a computer-based inventory system using Java, NetBeans and the
+ * concepts of inheritance and polymorphism.
  * <p>
  * Long description.
  *
@@ -11,8 +12,6 @@ package csci242.assignments.vehicle;
  * @edu.uwp.cs.242.assignment 2
  * @bugs None
  */
-
-
 public class PassengerVehicle extends Vehicle {
 
     /**
@@ -20,15 +19,19 @@ public class PassengerVehicle extends Vehicle {
      */
     protected int numOfPassengers = 2;
 
+    /**
+     * The type of the car for toString().
+     */
     protected final String TYPE = "PASSENGERVEHICLE";
 
+    //region Constructors
     /**
-     *
+     * Empty constructor, numOfPassengers defaulted to 2.
      */
     public PassengerVehicle() {}
 
     /**
-     * Sets the
+     * Sets the number of passengers to the given integer.
      *
      * @param numOfPassengers The number of passengers the PassengerVehicle can
      *                        accomodate.
@@ -37,7 +40,7 @@ public class PassengerVehicle extends Vehicle {
         this.numOfPassengers = numOfPassengers;
     }
 
-    protected PassengerVehicle(int vehicleId, String manufacturer,
+    public PassengerVehicle(int vehicleId, String manufacturer,
                                String model, int numOfPassengers) {
         super(vehicleId, manufacturer, model);
         this.numOfPassengers = numOfPassengers;
@@ -47,10 +50,17 @@ public class PassengerVehicle extends Vehicle {
         super(vehicle);
     }
 
+    /**
+     * Cloning constructor; copies the given PassengerVehicle's fields to its
+     * own.
+     *
+     * @param vehicle The PassengerVehicle to clone.
+     */
     public PassengerVehicle(PassengerVehicle vehicle) {
         super(vehicle);
         numOfPassengers = vehicle.numOfPassengers;
     }
+    //endregion
 
 
     public int getNumOfPassengers() {
@@ -71,7 +81,6 @@ public class PassengerVehicle extends Vehicle {
         PassengerVehicle that = (PassengerVehicle) o;
 
         return numOfPassengers == that.numOfPassengers;
-
     }
 
     @Override

@@ -3,7 +3,8 @@ package csci242.assignments.vehicle;
 import java.util.ArrayList;
 
 /**
- * Short description.
+ * Implement a computer-based inventory system using Java, NetBeans and the
+ * concepts of inheritance and polymorphism.
  * <p/>
  * Long description.
  *

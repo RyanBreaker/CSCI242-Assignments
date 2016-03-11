@@ -1,9 +1,10 @@
 package csci242.assignments.vehicle;
 
 /**
- * Short description.
+ * Implement a computer-based inventory system using Java, NetBeans and the
+ * concepts of inheritance and polymorphism.
  * <p>
- * Long description.
+ * The Car class represents a PassengerVehicle with a specific number of doors.
  *
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
@@ -13,12 +14,20 @@ package csci242.assignments.vehicle;
  */
 public class Car extends PassengerVehicle {
 
+    /**
+     * The number of doors the Car has.
+     */
     protected int numOfDoors = 2;
 
+    /**
+     * The type of the car for toString().
+     */
     protected final String TYPE = "CAR";
 
+
+    //region Constructors
     /**
-     * Empty constructor, numOfDoors defaults to 2.
+     * Empty constructor, numOfDoors defaulted to 2.
      */
     public Car() {}
 
@@ -32,8 +41,8 @@ public class Car extends PassengerVehicle {
     }
 
     /**
-     * Cloning constructor, takes an existing Car and copies its fields'
-     * values into its own.
+     * Cloning constructor; takes an existing Car and copies its fields'
+     * values to its own.
      *
      * @param car The Car to duplicate.
      */
@@ -43,7 +52,7 @@ public class Car extends PassengerVehicle {
     }
 
     /**
-     *
+     * Constructs a Car from the given arguments.
      *
      * @param vehicleId VIN of the vehicle.
      * @param manufacturer Manufacturer of the vehicle.
@@ -56,6 +65,7 @@ public class Car extends PassengerVehicle {
         super(vehicleId, manufacturer, model, numOfPassengers);
         this.numOfDoors = numOfDoors;
     }
+    //endregion
 
 
     /**

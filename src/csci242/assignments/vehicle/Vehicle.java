@@ -1,9 +1,10 @@
 package csci242.assignments.vehicle;
 
 /**
- *
+ * Implement a computer-based inventory system using Java, NetBeans and the
+ * concepts of inheritance and polymorphism.
  * <p>
- *
+ * The Vehicle class
  *
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
@@ -29,6 +30,15 @@ public class Vehicle implements Comparable<Vehicle> {
     protected final String TYPE = "VEHICLE";
 
 
+    /**
+     * Replaces the given oldTYPE string with the newTYPE from the start of the
+     * given line; for overridden toString() methods.
+     *
+     * @param line The line in which to replace the TYPEs.
+     * @param oldTYPE The old TYPE to replace.
+     * @param newTYPE The new TYPE to replace the old TYPE with.
+     * @return Returns the fixed string.
+     */
     protected final String replaceTYPE(String line, String oldTYPE, String newTYPE) {
         return newTYPE + line.substring(oldTYPE.length());
     }
@@ -115,7 +125,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     * Changes the model of the Vehicle to the given .
+     * Changes the model of the Vehicle.
      *
      * @param model New model of the Vehicle.
      */
@@ -149,9 +159,9 @@ public class Vehicle implements Comparable<Vehicle> {
     @Override
     public int compareTo(Vehicle o) {
         if(o.vehicleId > vehicleId)
-            return 1;
-        if(o.vehicleId < vehicleId)
             return -1;
+        if(o.vehicleId < vehicleId)
+            return 1;
         return 0;
     }
 

@@ -1,7 +1,8 @@
 package csci242.assignments.vehicle;
 
 /**
- * Short description.
+ * Implement a computer-based inventory system using Java, NetBeans and the
+ * concepts of inheritance and polymorphism.
  * <p>
  * Long description.
  *
@@ -13,10 +14,20 @@ package csci242.assignments.vehicle;
  */
 public class Truck extends TransportationVehicle {
 
-    protected int numOfContainers;
+    protected int numOfContainers = 1;
 
 
     public Truck() {}
+
+    public Truck(Vehicle vehicle) {
+        super(vehicle);
+    }
+
+    public Truck(Truck vehicle) {
+        super(vehicle);
+        loadCapacity = vehicle.loadCapacity;
+        numOfContainers = vehicle.numOfContainers;
+    }
 
     public Truck(int vehicleId, String manufacturer, String model,
                  int loadCapacity, int numOfContainers) {
