@@ -13,9 +13,9 @@ package csci242.assignments.stringhandler;
  */
 public class PasswordSecurityHandler implements StringHandler {
 
-    final String SECURITY_LEVEL_WEAK   = "weak";
-    final String SECURITY_LEVEL_MEDIUM = "medium";
-    final String SECURITY_LEVEL_STRONG = "string";
+    static final String SECURITY_LEVEL_WEAK   = "weak";
+    static final String SECURITY_LEVEL_MEDIUM = "medium";
+    static final String SECURITY_LEVEL_STRONG = "string";
 
 
 
@@ -33,9 +33,23 @@ public class PasswordSecurityHandler implements StringHandler {
     private boolean otherCharacter = false;
 
 
-    public String securityLevel() {
-        return "";
+    @Override
+    public void reset() {
+        length = 0;
+        digit = false;
+        otherCharacter = false;
     }
+
+    public String securityLevel() {
+        if(length >= 8) {
+            if(digit && otherCharacter)
+                return SECURITY_LEVEL_STRONG;
+            if(digit || otherCharacter)
+                return SECURITY_LEVEL_MEDIUM;
+        }
+        return SECURITY_LEVEL_WEAK;
+    }
+
 
     //region StringHandler methods
     /**
@@ -43,7 +57,7 @@ public class PasswordSecurityHandler implements StringHandler {
      */
     @Override
     public void processDigit(char digit) {
-        if (digit < '0' || digit > '9') {
+        if(!Character.isDigit(digit)) {
             throw new IllegalArgumentException(PROCESSDIGIT_ERROR);
         }
 
@@ -56,7 +70,7 @@ public class PasswordSecurityHandler implements StringHandler {
      */
     @Override
     public void processLetter(char letter) {
-        if (letter < 'A' || letter > 'z') {
+        if(!Character.isAlphabetic(letter)) {
             throw new IllegalArgumentException(PROCESSLETTER_ERROR);
         }
 
@@ -68,7 +82,7 @@ public class PasswordSecurityHandler implements StringHandler {
      */
     @Override
     public void processOther(char other) {
-        if ((other >= '0' && other <= '9') || (other >= 'A' && other <'z')) {
+        if(Character.isDigit(other) || Character.isAlphabetic(other)) {
             throw new IllegalArgumentException(PROCESSOTHER_ERROR);
         }
 
@@ -77,10 +91,10 @@ public class PasswordSecurityHandler implements StringHandler {
     }
     //endregion
 
+    //region Getters
     /**
      * @return The password's length.
      */
-    //region Getters
     protected int getLength() {
         return length;
     }

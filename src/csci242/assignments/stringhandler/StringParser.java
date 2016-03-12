@@ -22,6 +22,14 @@ public class StringParser {
 
 
     public void parse(String s) {
-
+        for(char c : s.toCharArray()) {
+            if(Character.isAlphabetic(c)) {
+                handler.processLetter(c);
+            } else if(Character.isDigit(c)) {
+                handler.processDigit(c);
+            } else {
+                handler.processOther(c);
+            }
+        }
     }
 }

@@ -19,9 +19,14 @@ public class HexStringHandler implements StringHandler, Validator {
     final int NUMBER_LETTER_MAX = 16;
 
 
-    private boolean validHex;
-    private int number;
+    private boolean validHex = false;
+    private int number = 0;
 
+    @Override
+    public void reset() {
+        validHex = false;
+        number = 0;
+    }
 
     @Override
     public void processDigit(char digit) {
