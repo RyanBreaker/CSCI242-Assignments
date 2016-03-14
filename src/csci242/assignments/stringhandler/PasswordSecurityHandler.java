@@ -8,19 +8,17 @@ package csci242.assignments.stringhandler;
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
  * @edu.uwp.cs.242.section 001
- * @edu.uwp.cs.242.assignment 2
+ * @edu.uwp.cs.242.assignment 3
  * @bugs None
  */
 public class PasswordSecurityHandler implements StringHandler {
 
-    static final String SECURITY_LEVEL_WEAK   = "weak";
-    static final String SECURITY_LEVEL_MEDIUM = "medium";
-    static final String SECURITY_LEVEL_STRONG = "string";
-
-
+    protected static final String SECURITY_LEVEL_WEAK   = "weak";
+    protected static final String SECURITY_LEVEL_MEDIUM = "medium";
+    protected static final String SECURITY_LEVEL_STRONG = "string";
 
     /**
-     * Number of characters in the password.
+     * Number of characters processed.
      */
     private int length = 0;
     /**
@@ -33,13 +31,9 @@ public class PasswordSecurityHandler implements StringHandler {
     private boolean otherCharacter = false;
 
 
-    @Override
-    public void reset() {
-        length = 0;
-        digit = false;
-        otherCharacter = false;
-    }
-
+    /**
+     * @return the security level of the parsed password.
+     */
     public String securityLevel() {
         if(length >= 8) {
             if(digit && otherCharacter)
@@ -112,6 +106,5 @@ public class PasswordSecurityHandler implements StringHandler {
     protected boolean getOtherCharacter() {
         return otherCharacter;
     }
-
     //endregion
 }

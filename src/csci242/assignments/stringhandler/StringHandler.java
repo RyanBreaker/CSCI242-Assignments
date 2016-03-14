@@ -34,6 +34,4 @@ public interface StringHandler {
      * @param other The char to verify.
      */
     void processOther(char other);
-
-    void reset();
 }

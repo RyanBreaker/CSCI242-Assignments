@@ -13,12 +13,10 @@ import static org.junit.Assert.fail;
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
  * @edu.uwp.cs.242.section 001
- * @edu.uwp.cs.242.assignment 2
+ * @edu.uwp.cs.242.assignment 3
  * @bugs None
  */
 public class StringHandlerTest {
-
-    private StringHandlerTest() {}
 
     protected enum CharType {
         Digit, Letter, Other
@@ -26,25 +24,28 @@ public class StringHandlerTest {
 
     private static Function<Character, Boolean> checker;
 
+
+    private StringHandlerTest() {}
+
     private static boolean isOther(char c) {
         return !(Character.isDigit(c) || Character.isAlphabetic(c));
     }
 
-    private static String message(String method, char c) {
-        return String.format("Method %s failed at '%c' (%d).", method, c, (int)c);
+    private static void failWithMessage(CharType charType, char c) {
+        fail(String.format("Type %s failed at '%c' (%d).", charType, c, (int)c));
     }
 
     /**
-     * @param type    type
+     * @param charType    type
      * @param handler method to run the loop against.
      * @throws Exception if it fails at any point.
      */
-    public static int loopTest(CharType type, Consumer<Character> handler)
+    public static int loopTest(CharType charType, Consumer<Character> handler)
             throws Exception {
         int length = 0;
 
         // Assign the checker to the right Character.is* method.
-        switch(type) {
+        switch(charType) {
             case Digit:
                 checker = Character::isDigit;
                 break;
@@ -55,7 +56,9 @@ public class StringHandlerTest {
                 checker = StringHandlerTest::isOther;
         }
 
+        // Test time!
         for(char i = 0; i < 256; i++) {
+            // Is the current character valid for what we're checking?
             boolean valid = checker.apply(i);
 
             try {
@@ -63,7 +66,7 @@ public class StringHandlerTest {
             } catch (IllegalArgumentException e) {
                 if(valid) {
                     // Fail if i is valid and nothing should have been thrown.
-                    fail(message(handler.toString(), i));
+                    failWithMessage(charType, i);
                 } else {
                     // Continue if the throw was correct.
                     continue;
@@ -72,7 +75,7 @@ public class StringHandlerTest {
 
             // Fail if it should have thrown but didn't.
             if(!valid) {
-                fail(message(handler.toString(), i));
+                failWithMessage(charType, i);
             }
 
             length++;
