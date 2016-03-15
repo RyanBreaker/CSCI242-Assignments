@@ -1,5 +1,7 @@
 package csci242.assignments.stringhandler;
 
+import java.util.Scanner;
+
 /**
  * Short description.
  * <p>
@@ -30,6 +32,46 @@ public class StringParser {
             } else {
                 handler.processOther(c);
             }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String line;
+        StringParser parser = new StringParser(new HexStringHandler());
+
+        // HexStringHandler
+        System.out.print("Enter a hexadecimal number >  ");
+        line = input.nextLine();
+
+        parser.parse(line);
+
+        {
+            HexStringHandler handler = (HexStringHandler)parser.handler;
+
+            if(handler.isValid()) {
+                System.out.println(line + " = " + handler.getNumber());
+            } else {
+                System.out.println(line + " is not a valid hex number.");
+            }
+        }
+
+        System.out.println();
+
+        // PasswordSecurityHandler
+        parser = new StringParser(new PasswordSecurityHandler());
+
+        System.out.println("A strong password has at least eight characters " +
+                "and contains at least one digit and one special characters.");
+        System.out.print("Enter a password > ");
+        line = input.nextLine();
+
+        parser.parse(line);
+
+        {
+            PasswordSecurityHandler handler = (PasswordSecurityHandler)parser.handler;
+            System.out.println(line + "'s security is: " + handler.securityLevel());
         }
     }
 }

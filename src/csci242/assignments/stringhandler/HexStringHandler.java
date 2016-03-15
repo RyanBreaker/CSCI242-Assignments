@@ -13,11 +13,11 @@ package csci242.assignments.stringhandler;
  */
 public class HexStringHandler implements StringHandler, Validator {
 
-    final int INVALID_NUMBER = -1;
-    final int NUMBER_SYSTEM  = 16;
-    final int NUMBER_LETTER_MIN = 10;
-    final int NUMBER_LETTER_MAX = 16;
-
+    static final int INVALID_NUMBER = -1;
+    static final int NUMBER_SYSTEM  = 16;
+    static final int NUMBER_LETTER_MIN = 10;
+    static final int NUMBER_LETTER_MAX = 16;
+    static final String INVALIDHEX_ERROR = "Valid hex letter expected!";
 
     private boolean validHex = true;
     private int number = 0;
@@ -39,11 +39,20 @@ public class HexStringHandler implements StringHandler, Validator {
 
     @Override
     public void processLetter(char letter) {
-        if(!isValidHexLetter(letter)) {
+        if(!Character.isAlphabetic(letter)) {
             throw new IllegalArgumentException(PROCESSLETTER_ERROR);
         }
 
-        number += letter - (Character.isUpperCase(letter) ? 'A' : 'a') + 1;
+        // Don't bother trying if it's already invalid.
+        if(validHex) {
+            // Check if the given letter is invalid.
+            if(!isValidHexLetter(letter)) {
+                validHex = false;
+                return;
+            }
+
+            number += letter - (Character.isUpperCase(letter) ? 'A' : 'a') + 10;
+        }
     }
 
     @Override

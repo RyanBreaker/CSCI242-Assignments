@@ -15,7 +15,7 @@ public class PasswordSecurityHandler implements StringHandler {
 
     protected static final String SECURITY_LEVEL_WEAK   = "weak";
     protected static final String SECURITY_LEVEL_MEDIUM = "medium";
-    protected static final String SECURITY_LEVEL_STRONG = "string";
+    protected static final String SECURITY_LEVEL_STRONG = "strong";
 
     /**
      * Number of characters processed.

@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 
 /**

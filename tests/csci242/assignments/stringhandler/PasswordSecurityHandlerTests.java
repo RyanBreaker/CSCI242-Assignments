@@ -3,7 +3,7 @@ package csci242.assignments.stringhandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import static csci242.assignments.stringhandler.StringHandlerTest.*;
+import static csci242.assignments.stringhandler.StringHandlerTestHelper.*;
 import static org.junit.Assert.*;
 
 /**
@@ -26,6 +26,7 @@ public class PasswordSecurityHandlerTests {
         // Reset passwordHandler for each test.
         passwordHandler = new PasswordSecurityHandler();
 
+        // Test initial values.
         assertFalse(passwordHandler.getDigit());
         assertFalse(passwordHandler.getOtherCharacter());
     }
@@ -96,30 +97,21 @@ public class PasswordSecurityHandlerTests {
 
     @Test
     public void testProcessDigit() throws Exception {
-        int length = loopTest(CharType.Digit, passwordHandler::processDigit);
-
-        assertEquals(length, passwordHandler.getLength());
-        assertTrue(passwordHandler.getDigit());
-        assertFalse(passwordHandler.getOtherCharacter());
+        loopTest(Character::isDigit, passwordHandler::processDigit,
+                "processDigit");
     }
 
 
     @Test
     public void testProcessLetter() throws Exception {
-        int length = loopTest(CharType.Letter, passwordHandler::processLetter);
-
-        assertEquals(length, passwordHandler.getLength());
-        assertFalse(passwordHandler.getDigit());
-        assertFalse(passwordHandler.getOtherCharacter());
+        loopTest(Character::isAlphabetic, passwordHandler::processLetter,
+                "processLetter");
     }
 
 
     @Test
     public void testProcessOther() throws Exception {
-        int length = loopTest(CharType.Other, passwordHandler::processOther);
-
-        assertEquals(length, passwordHandler.getLength());
-        assertFalse(passwordHandler.getDigit());
-        assertTrue(passwordHandler.getOtherCharacter());
+        loopTest((c) -> !(Character.isDigit(c) || Character.isAlphabetic(c)),
+                passwordHandler::processOther, "processOther");
     }
 }
