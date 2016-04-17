@@ -196,7 +196,6 @@ public class ArrayBag<E> implements Cloneable {
 
     /**
      * Add the contents of another ArrayBag to this ArrayBag.
-     *
      * @param addend The ArrayBag whose contents will be added to this ArrayBag.
      */
     public void addAll(ArrayBag<E> addend) {
@@ -301,7 +300,6 @@ public class ArrayBag<E> implements Cloneable {
 
     /**
      * Accessor method to determine the current capacity of the ArrayBag.
-     *
      * @return the current capacity of this ArrayBag.
      */
     public int getCapacity() {
