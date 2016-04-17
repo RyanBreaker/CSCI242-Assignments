@@ -180,7 +180,6 @@ public class ArrayBag<E> implements Cloneable {
 
 
     //region Add
-
     /**
      * Add a new element to the ArrayBag.
      *
@@ -225,7 +224,6 @@ public class ArrayBag<E> implements Cloneable {
 
 
     //region Remove
-
     /**
      * Remove a specified element from this ArrayBag.
      *
@@ -267,7 +265,6 @@ public class ArrayBag<E> implements Cloneable {
 
 
     //region Getters
-
     /**
      * Accessor method to retrieve a random element from this ArrayBag.
      *
@@ -294,10 +291,19 @@ public class ArrayBag<E> implements Cloneable {
         return size == 0;
     }
 
+    /**
+     * Accessor method to determine the number of items in the ArrayBag.
+     * @return the current size of this ArrayBag.
+     */
     public int getSize() {
         return size;
     }
 
+    /**
+     * Accessor method to determine the current capacity of the ArrayBag.
+     *
+     * @return the current capacity of this ArrayBag.
+     */
     public int getCapacity() {
         return array.length;
     }
