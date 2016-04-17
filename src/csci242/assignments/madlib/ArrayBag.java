@@ -33,8 +33,8 @@ import java.util.Objects;
  */
 public class ArrayBag<E> implements Cloneable {
 
-    private static final int DEFAULT_INITIAL_CAPACITY = 10;
-    private static final int MIN_EXPAND = 10;
+    protected static final int DEFAULT_INITIAL_CAPACITY = 10;
+    protected static final int MIN_EXPAND = 10;
 
     private int size = 0;
     private Object[] array;
@@ -89,11 +89,6 @@ public class ArrayBag<E> implements Cloneable {
         return (E) array[index];
     }
 
-    private void rangeCheck(int index) {
-        if (index >= size) {
-            throw new IndexOutOfBoundsException("Index " + index + " outside of bounds!");
-        }
-    }
 
     /**
      * Generate a copy of this ArrayBag.
@@ -106,7 +101,7 @@ public class ArrayBag<E> implements Cloneable {
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         super.clone();
 
         ArrayBag<E> clone = new ArrayBag<>(getCapacity());
@@ -234,6 +229,9 @@ public class ArrayBag<E> implements Cloneable {
      */
     public boolean remove(E target) {
         Objects.requireNonNull(target);
+
+        // Don't do anything if there's nothing here in the first place
+        if (size == 0) return false;
 
         for (int i = 0; i < size; i++) {
             if (target.equals(element(i))) {
