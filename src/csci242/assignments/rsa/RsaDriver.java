@@ -17,12 +17,12 @@ public class RsaDriver {
         final int d = 975;
         final int n = 2773;
 
-        final String plainTextFilename     = "testFiles/file.txt";
+        final String plainTextFilename = "testFiles/file.txt";
         final String encryptedTextFilename = "testFiles/encryptedFile.txt";
         final String decryptedTextFilename = "testFiles/decryptedFile.txt";
 
         FileInOut fio = new FileInOut(plainTextFilename,
-                                      encryptedTextFilename, true);
+                encryptedTextFilename, true);
         Rsa rsa = new Rsa();
 
         // Encrypt plainTextFilename contents

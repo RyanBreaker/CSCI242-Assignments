@@ -25,12 +25,14 @@ public class Inventory {
     }
 
 
-    public void init() {}
+    public void init() {
+    }
 
-    public void report() {}
+    public void report() {
+    }
 
     public void printList(ArrayList<Vehicle> al) {
-        for(Vehicle v : al) {
+        for (Vehicle v : al) {
             System.out.println(v);
         }
     }

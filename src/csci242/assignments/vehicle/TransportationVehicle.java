@@ -18,7 +18,8 @@ public class TransportationVehicle extends Vehicle {
 
 
     //region Constructors
-    public TransportationVehicle() {}
+    public TransportationVehicle() {
+    }
 
     public TransportationVehicle(int loadCapacity) {
         this.loadCapacity = loadCapacity;

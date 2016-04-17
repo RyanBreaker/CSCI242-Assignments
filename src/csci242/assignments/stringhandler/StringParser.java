@@ -1,7 +1,9 @@
 package csci242.assignments.stringhandler;
 
 /**
- * Short description.
+ * Implement a string parsing system, called StringHandler, in Java that uses
+ * interfaces to specify common behavior and interface implementations to
+ * specify specific behavior.
  * <p>
  * Long description.
  *
@@ -22,10 +24,10 @@ public class StringParser {
 
 
     public void parse(String s) {
-        for(char c : s.toCharArray()) {
-            if(Character.isAlphabetic(c)) {
+        for (char c : s.toCharArray()) {
+            if (Character.isAlphabetic(c)) {
                 handler.processLetter(c);
-            } else if(Character.isDigit(c)) {
+            } else if (Character.isDigit(c)) {
                 handler.processDigit(c);
             } else {
                 handler.processOther(c);

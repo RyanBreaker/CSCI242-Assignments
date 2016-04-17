@@ -1,7 +1,9 @@
 package csci242.assignments.stringhandler;
 
 /**
- * Short description.
+ * Implement a string parsing system, called StringHandler, in Java that uses
+ * interfaces to specify common behavior and interface implementations to
+ * specify specific behavior.
  * <p>
  * Long description.
  *
@@ -13,7 +15,7 @@ package csci242.assignments.stringhandler;
  */
 public class PasswordSecurityHandler implements StringHandler {
 
-    protected static final String SECURITY_LEVEL_WEAK   = "weak";
+    protected static final String SECURITY_LEVEL_WEAK = "weak";
     protected static final String SECURITY_LEVEL_MEDIUM = "medium";
     protected static final String SECURITY_LEVEL_STRONG = "strong";
 
@@ -35,10 +37,10 @@ public class PasswordSecurityHandler implements StringHandler {
      * @return the security level of the parsed password.
      */
     public String securityLevel() {
-        if(length >= 8) {
-            if(digit && otherCharacter)
+        if (length >= 8) {
+            if (digit && otherCharacter)
                 return SECURITY_LEVEL_STRONG;
-            if(digit || otherCharacter)
+            if (digit || otherCharacter)
                 return SECURITY_LEVEL_MEDIUM;
         }
         return SECURITY_LEVEL_WEAK;
@@ -46,12 +48,13 @@ public class PasswordSecurityHandler implements StringHandler {
 
 
     //region StringHandler methods
+
     /**
      * @param digit The char to verify.
      */
     @Override
     public void processDigit(char digit) {
-        if(!Character.isDigit(digit)) {
+        if (!Character.isDigit(digit)) {
             throw new IllegalArgumentException(PROCESSDIGIT_ERROR);
         }
 
@@ -64,7 +67,7 @@ public class PasswordSecurityHandler implements StringHandler {
      */
     @Override
     public void processLetter(char letter) {
-        if(!Character.isAlphabetic(letter)) {
+        if (!Character.isAlphabetic(letter)) {
             throw new IllegalArgumentException(PROCESSLETTER_ERROR);
         }
 
@@ -76,7 +79,7 @@ public class PasswordSecurityHandler implements StringHandler {
      */
     @Override
     public void processOther(char other) {
-        if(Character.isDigit(other) || Character.isAlphabetic(other)) {
+        if (Character.isDigit(other) || Character.isAlphabetic(other)) {
             throw new IllegalArgumentException(PROCESSOTHER_ERROR);
         }
 
@@ -86,6 +89,7 @@ public class PasswordSecurityHandler implements StringHandler {
     //endregion
 
     //region Getters
+
     /**
      * @return The password's length.
      */

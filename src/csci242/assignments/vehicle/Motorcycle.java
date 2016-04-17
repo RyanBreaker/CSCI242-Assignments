@@ -20,7 +20,8 @@ public class Motorcycle extends PassengerVehicle {
     protected int weight = 400;
 
 
-    public Motorcycle() {}
+    public Motorcycle() {
+    }
 
     public Motorcycle(int vehicleId, String manufacturer, String model, int weight) {
         super(vehicleId, manufacturer, model, 1);

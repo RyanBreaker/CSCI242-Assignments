@@ -4,12 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static csci242.assignments.stringhandler.StringHandlerTestHelper.loopTest;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * Short description.
+ * Implement a string parsing system, called StringHandler, in Java that uses
+ * interfaces to specify common behavior and interface implementations to
+ * specify specific behavior.
  * <p>
  * Long description.
  *
@@ -37,8 +37,8 @@ public class HexStringHandlerTest {
 
     @Test
     public void testIsValidHexLetter() throws Exception {
-        for(char i = 0; i < 256; i++) {
-            if(i < 'A' || (i > 'F' && i < 'a') || i > 'f') {
+        for (char i = 0; i < 256; i++) {
+            if (i < 'A' || (i > 'F' && i < 'a') || i > 'f') {
                 assertFalse(hexHandler.isValidHexLetter(i));
             } else {
                 assertTrue(hexHandler.isValidHexLetter(i));
@@ -53,14 +53,14 @@ public class HexStringHandlerTest {
 
     @Test
     public void testProcessLetter() throws Exception {
-        loopTest(hexHandler::isValidHexLetter, hexHandler::processLetter,
+        loopTest(Character::isAlphabetic, hexHandler::processLetter,
                 "processLetter");
     }
 
     @Test
     public void testProcessOther() throws Exception {
         loopTest((c) ->
-                    !(hexHandler.isValidHexLetter(c) || Character.isDigit(c)),
+                        !(hexHandler.isValidHexLetter(c) || Character.isDigit(c)),
                 hexHandler::processOther, "processOther");
     }
 
@@ -69,7 +69,7 @@ public class HexStringHandlerTest {
         StringParser parser = new StringParser(hexHandler);
         int number = 0;
 
-        for(int i = 0; i < HexStringHandler.NUMBER_SYSTEM; i++) {
+        for (int i = 0; i < HexStringHandler.NUMBER_SYSTEM; i++) {
             number += i;
         }
 
@@ -85,7 +85,7 @@ public class HexStringHandlerTest {
 
         try {
             parser.parse("ABCDEFGHIJKLMNOP");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             assertEquals(HexStringHandler.INVALIDHEX_ERROR, e.getMessage());
         }
 

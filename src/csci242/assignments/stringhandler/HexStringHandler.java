@@ -1,9 +1,11 @@
 package csci242.assignments.stringhandler;
 
 /**
- * Short description.
+ * Implement a string parsing system, called StringHandler, in Java that uses
+ * interfaces to specify common behavior and interface implementations to
+ * specify specific behavior.
  * <p>
- * Long description.
+ * Handler for a hex string. Accepts characters 0-9, A-F, and a-f.
  *
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
@@ -14,7 +16,7 @@ package csci242.assignments.stringhandler;
 public class HexStringHandler implements StringHandler, Validator {
 
     static final int INVALID_NUMBER = -1;
-    static final int NUMBER_SYSTEM  = 16;
+    static final int NUMBER_SYSTEM = 16;
     static final int NUMBER_LETTER_MIN = 10;
     static final int NUMBER_LETTER_MAX = 16;
     static final String INVALIDHEX_ERROR = "Valid hex letter expected!";
@@ -30,7 +32,7 @@ public class HexStringHandler implements StringHandler, Validator {
 
     @Override
     public void processDigit(char digit) {
-        if(!Character.isDigit(digit)) {
+        if (!Character.isDigit(digit)) {
             throw new IllegalArgumentException(PROCESSDIGIT_ERROR);
         }
 
@@ -39,14 +41,14 @@ public class HexStringHandler implements StringHandler, Validator {
 
     @Override
     public void processLetter(char letter) {
-        if(!Character.isAlphabetic(letter)) {
+        if (!Character.isAlphabetic(letter)) {
             throw new IllegalArgumentException(PROCESSLETTER_ERROR);
         }
 
         // Don't bother trying if it's already invalid.
-        if(validHex) {
+        if (validHex) {
             // Check if the given letter is invalid.
-            if(!isValidHexLetter(letter)) {
+            if (!isValidHexLetter(letter)) {
                 validHex = false;
                 return;
             }
@@ -57,7 +59,7 @@ public class HexStringHandler implements StringHandler, Validator {
 
     @Override
     public void processOther(char other) {
-        if(Character.isDigit(other) || isValidHexLetter(other)) {
+        if (Character.isDigit(other) || isValidHexLetter(other)) {
             throw new IllegalArgumentException(PROCESSOTHER_ERROR);
         }
 

@@ -1,7 +1,9 @@
 package csci242.assignments.rsa;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 // TODO: Double-check exception throwing
 
@@ -27,7 +29,7 @@ public class FileInOut {
     /**
      * Default filename for the input file.
      */
-    private final String DEFAULTINFILENAME  = "default_in.txt";
+    private final String DEFAULTINFILENAME = "default_in.txt";
     /**
      * Default filename for the output file.
      */
@@ -69,51 +71,52 @@ public class FileInOut {
      * If a given filename's String is empty, a default of "default_in.txt"
      * or "default_out.txt" is used instead.
      *
-     * @param  pIn   Name of the input file.
-     * @param  pOut  Name of the output file.
-     * @param  pOpenFlag
-     *         If true, files will be opened automatically, otherwise
-     *         the files will need to be opened manually.
-     *
-     * @throws FileNotFoundException
-     *         Thrown if the input file does not exist or cannot be written
-     *         or if the output cannot be written to.
-     *
+     * @param pIn       Name of the input file.
+     * @param pOut      Name of the output file.
+     * @param pOpenFlag If true, files will be opened automatically, otherwise
+     *                  the files will need to be opened manually.
+     * @throws FileNotFoundException Thrown if the input file does not exist or cannot be written
+     *                               or if the output cannot be written to.
      */
     public FileInOut(String pIn, String pOut, boolean pOpenFlag)
             throws FileNotFoundException {
 
-        inFilename  = pIn;
+        inFilename = pIn;
         outFilename = pOut;
 
-        if(pOpenFlag) {
+        if (pOpenFlag) {
             openFiles();
         }
     }
 
 
     //region Getters and Setters
+
     /**
      * Returns the current filename of the input file.
      *
-     * @return  The current filename of the input file.
+     * @return The current filename of the input file.
      */
-    public String getInFilename()  { return inFilename; }
-
-    /**
-     * Returns the current filename of the output file.
-     *
-     * @return  The current filename of the output file.
-     */
-    public String getOutFilename() { return outFilename; }
+    public String getInFilename() {
+        return inFilename;
+    }
 
     /**
      * Sets the input file's filename to the given String.
      *
-     * @param  inFilename  String to set the input file's filename to.
+     * @param inFilename String to set the input file's filename to.
      */
     public void setInFilename(String inFilename) {
         this.inFilename = inFilename;
+    }
+
+    /**
+     * Returns the current filename of the output file.
+     *
+     * @return The current filename of the output file.
+     */
+    public String getOutFilename() {
+        return outFilename;
     }
 
     /**
@@ -122,7 +125,7 @@ public class FileInOut {
      * of this object will be required with closeOutFile() and openOutFile(),
      * or with the closeFiles() and openFiles() meta methods for both.
      *
-     * @param  outFilename  String to set the output file's filename to.
+     * @param outFilename String to set the output file's filename to.
      */
     public void setOutFilename(String outFilename) {
         this.outFilename = outFilename;
@@ -134,39 +137,47 @@ public class FileInOut {
      * of this object will be required with closeInFile() and openInFile(),
      * or with the closeFiles() and openFiles() meta methods for both.
      *
-     * @return  The Scanner for reading the input file.
+     * @return The Scanner for reading the input file.
      */
-    public Scanner getInFile() { return inFileScanner; }
+    public Scanner getInFile() {
+        return inFileScanner;
+    }
 
     /**
      * Returns the PrintWriter for writing to the output file.
      *
-     * @return  The PrintWriter for writing to the output file.
+     * @return The PrintWriter for writing to the output file.
      */
-    public PrintWriter getOutFile() { return outFileWriter; }
+    public PrintWriter getOutFile() {
+        return outFileWriter;
+    }
     //endregion
 
     /**
      * Returns true if the input file's Scanner is open, false otherwise.
      *
-     * @return  True if the input file's Scanner is open, false otherwise.
+     * @return True if the input file's Scanner is open, false otherwise.
      */
-    public boolean inFileIsOpen()  { return inFileOpen;  }
+    public boolean inFileIsOpen() {
+        return inFileOpen;
+    }
 
     /**
      * Returns true if the input file's PrintWriter is open, false otherwise.
      *
-     * @return  True if the input file's PrintWriter is open, false otherwise.
+     * @return True if the input file's PrintWriter is open, false otherwise.
      */
-    public boolean outFileIsOpen() { return outFileOpen; }
+    public boolean outFileIsOpen() {
+        return outFileOpen;
+    }
 
 
     //region Open methods
+
     /**
      * Meta method for opening both files.
      *
-     * @throws  FileNotFoundException
-     *          Thrown on nonexistant input file or output file is unwriteable.
+     * @throws FileNotFoundException Thrown on nonexistant input file or output file is unwriteable.
      */
     public void openFiles() throws FileNotFoundException {
         openInFile();
@@ -179,26 +190,25 @@ public class FileInOut {
      * Checks if inFilenam has content (is not an empty string), otherwise
      * DEFAULTINFILENAME ("default_in.txt") is used as the filename.
      *
-     * @throws  FileNotFoundException
-     *          If the input file does not exist or cannot be read.
+     * @throws FileNotFoundException If the input file does not exist or cannot be read.
      */
     public void openInFile() throws FileNotFoundException {
         File inFile;
 
-        if(inFilename.length() > 0) {
+        if (inFilename.length() > 0) {
             inFile = new File(inFilename);
         } else {
             inFile = new File(DEFAULTINFILENAME);
         }
 
         // Close the Scanner if it's already open before assigning new object.
-        if(inFileOpen) {
+        if (inFileOpen) {
             inFileScanner.close();
         }
 
         try {
             inFileScanner = new Scanner(inFile);
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             String message = "Input file '" + inFile.getAbsolutePath() +
                     "' cannot be opened!\n" + e.getMessage();
             throw new FileNotFoundException(message);
@@ -213,26 +223,25 @@ public class FileInOut {
      * Checks if outFilename has content (is not an empty string),
      * otherwise DEFAULTOUTFILENAME is used as the filename.
      *
-     * @throws  FileNotFoundException
-     *          If the output cannot be written to.
+     * @throws FileNotFoundException If the output cannot be written to.
      */
     public void openOutFile() throws FileNotFoundException {
         File outFile;
 
-        if(outFilename.length() > 0) {
+        if (outFilename.length() > 0) {
             outFile = new File(outFilename);
         } else {
             outFile = new File(DEFAULTOUTFILENAME);
         }
 
         // Close the Writer if it's already open before assigning new object.
-        if(outFileOpen) {
+        if (outFileOpen) {
             outFileWriter.close();
         }
 
         try {
             outFileWriter = new PrintWriter(outFile);
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             String message = "Output file '" + outFile.getAbsolutePath() +
                     "' cannot be opened!\n" + e.getMessage();
             throw new FileNotFoundException(message);
@@ -243,6 +252,7 @@ public class FileInOut {
     //endregion
 
     //region Close methods
+
     /**
      * Meta method for closing all files.
      */
@@ -273,16 +283,15 @@ public class FileInOut {
      * Checks the opened status of each the input and output files and
      * opens them if either is closed.
      *
-     * @throws FileNotFoundException
-     *         Thrown if the input file does not exist or cannot
-     *         be read or the output file cannot be written to.
+     * @throws FileNotFoundException Thrown if the input file does not exist or cannot
+     *                               be read or the output file cannot be written to.
      */
     public void checkFiles() throws FileNotFoundException {
-        if(!inFileOpen) {
+        if (!inFileOpen) {
             openInFile();
         }
 
-        if(!outFileOpen) {
+        if (!outFileOpen) {
             openOutFile();
         }
     }

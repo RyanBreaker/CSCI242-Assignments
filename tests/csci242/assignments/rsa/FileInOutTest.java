@@ -8,9 +8,7 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 import java.io.PrintWriter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * A program to encrypt and decrypt a file using the RSA encryption algorithm.
@@ -25,21 +23,17 @@ import static org.junit.Assert.assertTrue;
  */
 public class FileInOutTest {
 
+    final String testString = "HELLO\nFOO\nILIKEPIE\n";
+    final int e = 1007;
+    final int d = 975;
+    final int n = 2773;
+    // Only a single instance of Rsa is ever needed for testing
+    final Rsa rsa = new Rsa();
     FileInOut fio;
-
     TemporaryFolder tmp;
     File original;
     File encrypted;
     File decrypted;
-
-    final String testString = "HELLO\nFOO\nILIKEPIE\n";
-
-    final int e = 1007;
-    final int d = 975;
-    final int n = 2773;
-
-    // Only a single instance of Rsa is ever needed for testing
-    final Rsa rsa = new Rsa();
 
     @Before
     public void setUp() throws Exception {

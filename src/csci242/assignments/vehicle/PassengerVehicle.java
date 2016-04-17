@@ -15,20 +15,21 @@ package csci242.assignments.vehicle;
 public class PassengerVehicle extends Vehicle {
 
     /**
+     * The type of the car for toString().
+     */
+    protected final String TYPE = "PASSENGERVEHICLE";
+    /**
      * The number of passengers the PassengerVehicle can accomodate.
      */
     protected int numOfPassengers = 2;
 
-    /**
-     * The type of the car for toString().
-     */
-    protected final String TYPE = "PASSENGERVEHICLE";
-
     //region Constructors
+
     /**
      * Empty constructor, numOfPassengers defaulted to 2.
      */
-    public PassengerVehicle() {}
+    public PassengerVehicle() {
+    }
 
     /**
      * Sets the number of passengers to the given integer.
@@ -41,7 +42,7 @@ public class PassengerVehicle extends Vehicle {
     }
 
     public PassengerVehicle(int vehicleId, String manufacturer,
-                               String model, int numOfPassengers) {
+                            String model, int numOfPassengers) {
         super(vehicleId, manufacturer, model);
         this.numOfPassengers = numOfPassengers;
     }

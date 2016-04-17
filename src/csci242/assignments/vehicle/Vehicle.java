@@ -14,6 +14,7 @@ package csci242.assignments.vehicle;
  */
 public class Vehicle implements Comparable<Vehicle> {
 
+    protected final String TYPE = "VEHICLE";
     /**
      * The VIN of the Vehicle.
      */
@@ -27,42 +28,28 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     protected String model = "";
 
-    protected final String TYPE = "VEHICLE";
 
-
-    /**
-     * Replaces the given oldTYPE string with the newTYPE from the start of the
-     * given line; for overridden toString() methods.
-     *
-     * @param line The line in which to replace the TYPEs.
-     * @param oldTYPE The old TYPE to replace.
-     * @param newTYPE The new TYPE to replace the old TYPE with.
-     * @return Returns the fixed string.
-     */
-    protected final String replaceTYPE(String line, String oldTYPE, String newTYPE) {
-        return newTYPE + line.substring(oldTYPE.length());
-    }
-
-    //region Constructors
     /**
      * Empty constructor, initializes vehicleId to 1 and the the String
      * fields to an empty String.
      */
-    public Vehicle() {}
+    public Vehicle() {
+    }
+
+    //region Constructors
 
     /**
      * Sets the VIN, manufacturer, and model of the Vehicle on instantiation.
      *
-     * @param vehicleId VIN of the Vehicle.
+     * @param vehicleId    VIN of the Vehicle.
      * @param manufacturer Manufacturer of the Vehicle.
-     * @param model Model of the Vehicle.
+     * @param model        Model of the Vehicle.
      */
     public Vehicle(int vehicleId, String manufacturer, String model) {
         this.vehicleId = vehicleId;
         this.manufacturer = manufacturer;
         this.model = model;
     }
-
 
     /**
      * In lieu of overriding the infamous Object.clone(), this constructor
@@ -75,10 +62,24 @@ public class Vehicle implements Comparable<Vehicle> {
         manufacturer = vehicle.manufacturer;
         model = vehicle.model;
     }
+
+    /**
+     * Replaces the given oldTYPE string with the newTYPE from the start of the
+     * given line; for overridden toString() methods.
+     *
+     * @param line    The line in which to replace the TYPEs.
+     * @param oldTYPE The old TYPE to replace.
+     * @param newTYPE The new TYPE to replace the old TYPE with.
+     * @return Returns the fixed string.
+     */
+    protected final String replaceTYPE(String line, String oldTYPE, String newTYPE) {
+        return newTYPE + line.substring(oldTYPE.length());
+    }
     //endregion
 
 
     //region Getters & Setters
+
     /**
      * Returns the Vehicle's VIN.
      *
@@ -158,9 +159,9 @@ public class Vehicle implements Comparable<Vehicle> {
 
     @Override
     public int compareTo(Vehicle o) {
-        if(o.vehicleId > vehicleId)
+        if (o.vehicleId > vehicleId)
             return -1;
-        if(o.vehicleId < vehicleId)
+        if (o.vehicleId < vehicleId)
             return 1;
         return 0;
     }

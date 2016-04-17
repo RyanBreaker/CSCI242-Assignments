@@ -15,27 +15,23 @@ import static org.junit.Assert.assertEquals;
 /**
  * Project Assignments.
  * Created on 2/8/16.
+ *
  * @author Ryan Breaker
  */
 public class RsaTest {
 
-    TemporaryFolder tmp = new TemporaryFolder();
-
-    File original;
-    File encrypted;
-    File decrypted;
-
-    FileInOut fio;
-
     final String testString = "HELLO\nFOOBAR\nILIKEPIE\n";
     final String testDecrypted = "HELLOX\nFOOBAR\nILIKEPIE\n";
-
     final int e = 1007;
     final int d = 975;
     final int n = 2773;
-
     // Only a single instance is needed for any test.
     final Rsa rsa = new Rsa();
+    TemporaryFolder tmp = new TemporaryFolder();
+    File original;
+    File encrypted;
+    File decrypted;
+    FileInOut fio;
 
     @Before
     public void setUp() throws Exception {
@@ -80,7 +76,7 @@ public class RsaTest {
         rsa.decrypt(fio, d, n);
 
         reader = new Scanner(decrypted);
-        while(reader.hasNextLine()) {
+        while (reader.hasNextLine()) {
             actualDecryptedText += reader.nextLine() + "\n";
         }
 

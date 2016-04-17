@@ -15,21 +15,22 @@ package csci242.assignments.vehicle;
 public class Car extends PassengerVehicle {
 
     /**
+     * The type of the car for toString().
+     */
+    protected final String TYPE = "CAR";
+    /**
      * The number of doors the Car has.
      */
     protected int numOfDoors = 2;
 
-    /**
-     * The type of the car for toString().
-     */
-    protected final String TYPE = "CAR";
-
 
     //region Constructors
+
     /**
      * Empty constructor, numOfDoors defaulted to 2.
      */
-    public Car() {}
+    public Car() {
+    }
 
     /**
      * Copies a Vehicle's fields' values to the new Car's.
@@ -54,11 +55,11 @@ public class Car extends PassengerVehicle {
     /**
      * Constructs a Car from the given arguments.
      *
-     * @param vehicleId VIN of the vehicle.
-     * @param manufacturer Manufacturer of the vehicle.
-     * @param model Model of the vehicle.
+     * @param vehicleId       VIN of the vehicle.
+     * @param manufacturer    Manufacturer of the vehicle.
+     * @param model           Model of the vehicle.
      * @param numOfPassengers Number of passengers the vehicle can accomodate.
-     * @param numOfDoors Number of doors the vehicle has.
+     * @param numOfDoors      Number of doors the vehicle has.
      */
     public Car(int vehicleId, String manufacturer, String model,
                int numOfPassengers, int numOfDoors) {

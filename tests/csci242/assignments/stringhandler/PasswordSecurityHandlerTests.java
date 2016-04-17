@@ -3,11 +3,13 @@ package csci242.assignments.stringhandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import static csci242.assignments.stringhandler.StringHandlerTestHelper.*;
+import static csci242.assignments.stringhandler.StringHandlerTestHelper.loopTest;
 import static org.junit.Assert.*;
 
 /**
- * Short description.
+ * Implement a string parsing system, called StringHandler, in Java that uses
+ * interfaces to specify common behavior and interface implementations to
+ * specify specific behavior.
  * <p>
  * Long description.
  *

@@ -16,12 +16,6 @@ import java.util.Random;
  */
 public final class VehicleTestData {
 
-    /**
-     * Random number generator for randomVehicle methods.
-     */
-    private static Random rand = new Random();
-
-
     //region Consts
     public static final String[] MANUFACTURERS = {
             "Chevrolet",
@@ -29,7 +23,6 @@ public final class VehicleTestData {
             "Volksvagen",
             "Ford"
     };
-
     public static final String[][] CAR_MODELS = {{
             "Aveo",
             "Sonic",
@@ -57,7 +50,6 @@ public final class VehicleTestData {
             "Taurus",
             "Mustang"
     }};
-
     public static final String[][] TRUCK_MODELS = {{
             "Colorado",
             "Montana",
@@ -73,13 +65,18 @@ public final class VehicleTestData {
             "Model AA",
             "Model BB"
     }};
+    /**
+     * Random number generator for randomVehicle methods.
+     */
+    private static Random rand = new Random();
     //endregion
 
 
     /**
      * Don't let anyone instantiate this class.
      */
-    private VehicleTestData() {}
+    private VehicleTestData() {
+    }
 
     /**
      * @return A random index for manufacturers.
@@ -101,6 +98,7 @@ public final class VehicleTestData {
 
 
     //region PassengerVehicle
+
     /**
      * @return A randomly-generated PassengerVehicle.
      */
@@ -132,6 +130,7 @@ public final class VehicleTestData {
 
 
     //region TransportationVehicle
+
     /**
      * @return A randomly-generated TransportationVehicle.
      */

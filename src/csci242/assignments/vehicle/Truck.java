@@ -17,7 +17,8 @@ public class Truck extends TransportationVehicle {
     protected int numOfContainers = 1;
 
 
-    public Truck() {}
+    public Truck() {
+    }
 
     public Truck(Vehicle vehicle) {
         super(vehicle);
