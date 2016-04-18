@@ -9,10 +9,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Short description.
- * <p>
- * Long description.
- *
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
  * @edu.uwp.cs.242.section 001
@@ -22,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 public class ArrayBagTest {
 
     ArrayBag<Integer> testBag;
-
 
     @Before
     public void setUp() {

@@ -1,5 +1,7 @@
 package csci242.assignments.vehicle;
 
+import csci242.assignments.vehicle.PassengerVehicle;
+import csci242.assignments.vehicle.VehicleTestData;
 import org.junit.Before;
 import org.junit.Test;
 
