@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ArrayBagTest {
 
-    ArrayBag<Integer> testBag;
+    private ArrayBag<Integer> testBag;
 
     @Before
     public void setUp() {

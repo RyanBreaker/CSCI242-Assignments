@@ -3,7 +3,6 @@ package csci242.assignments.stringhandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import static csci242.assignments.stringhandler.StringHandlerTestHelper.loopTest;
 import static org.junit.Assert.*;
 
 /**
@@ -48,18 +47,18 @@ public class HexStringHandlerTest {
 
     @Test
     public void testProcessDigit() throws Exception {
-        loopTest(Character::isDigit, hexHandler::processDigit, "processDigit");
+        StringHandlerTestHelper.loopTest(Character::isDigit, hexHandler::processDigit, "processDigit");
     }
 
     @Test
     public void testProcessLetter() throws Exception {
-        loopTest(Character::isAlphabetic, hexHandler::processLetter,
+        StringHandlerTestHelper.loopTest(Character::isAlphabetic, hexHandler::processLetter,
                 "processLetter");
     }
 
     @Test
     public void testProcessOther() throws Exception {
-        loopTest((c) ->
+        StringHandlerTestHelper.loopTest((c) ->
                         !(hexHandler.isValidHexLetter(c) || Character.isDigit(c)),
                 hexHandler::processOther, "processOther");
     }
