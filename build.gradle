@@ -1,6 +1,5 @@
 apply plugin: 'java'
 group = 'rocks.breaker'
-archivesBaseName = 'csci-242'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -10,4 +9,3 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 }
-
