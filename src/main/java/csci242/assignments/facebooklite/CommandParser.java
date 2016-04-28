@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class CommandParser {
     private Scanner in = new Scanner(System.in);
 
-    // TODO: refarctor this method, it's ugly af
+    // TODO: refactor this method, it's ugly af
     public Command getCommand() {
         Command command = null;
 
