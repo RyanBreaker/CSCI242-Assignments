@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
  * @author Ryan Breaker
  * @edu.uwp.cs.242.course CSCI242 - Computer Science II
  * @edu.uwp.cs.242.section 001
- * @edu.uwp.cs.242.assignment 2
+ * @edu.uwp.cs.242.assignment 5
  * @bugs None
  */
 public class PersonTest {
@@ -109,6 +109,12 @@ public class PersonTest {
 
         assertTrue(removedFromOther);
         assertFalse(removedFromTest);;
+    }
+
+    @Test
+    public void testRemoveFriend_self() {
+        boolean testPersonRemovedFromSelf = testPerson.removeFriend(testPerson);
+        assertFalse(testPersonRemovedFromSelf);
     }
     //endregion
 }
