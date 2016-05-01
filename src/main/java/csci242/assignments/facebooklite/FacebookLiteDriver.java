@@ -32,7 +32,6 @@ public class FacebookLiteDriver {
             else if (line.equals("2"))
                 whatDo = Mode.FILE;
         }
-
         println("done");
     }
 
