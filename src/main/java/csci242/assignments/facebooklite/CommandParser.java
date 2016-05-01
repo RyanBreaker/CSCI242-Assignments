@@ -1,5 +1,7 @@
 package csci242.assignments.facebooklite;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -14,17 +16,24 @@ import java.util.Scanner;
  * @edu.uwp.cs.242.assignment 5
  * @bugs None
  */
-public class CommandParser {
-    private Scanner in = new Scanner(System.in);
+class CommandParser {
+    private Scanner in;
 
-    // TODO: refactor this method, it's ugly af
-    public Command getCommand() {
+    CommandParser() {
+        in = new Scanner(System.in);
+    }
+
+    CommandParser(File file) throws FileNotFoundException {
+        in = new Scanner(file);
+    }
+
+    Command getCommand() {
         Command command = null;
 
-        while (true) {
-            String[] line = in.nextLine().split("\\s+");
-            char commandChar;
+        while (command == null) {
             CommandType type;
+            char commandChar;
+            String[] line = in.nextLine().split("\\s+");
 
             if (line[0].length() != 1) {
                 System.out.println("Error: First symbol in line not a command!");
@@ -32,14 +41,11 @@ public class CommandParser {
             }
 
             commandChar = line[0].toUpperCase().charAt(0);
+            if (commandChar == 'X') return new Command(CommandType.EXIT);
+
             type = CommandType.getType(commandChar, line.length - 1);
-
-            if (commandChar == 'X') {
-                return new Command(CommandType.EXIT);
-            }
-
             if (type == null) {
-                System.out.println("Error: Inocrrect number of paramters for command!");
+                System.out.println("Error: Bad format for command " + commandChar);
                 continue;
             }
 
@@ -47,8 +53,6 @@ public class CommandParser {
                 command = new Command(type);
             else
                 command = new Command(type, Arrays.copyOfRange(line, 1, line.length));
-
-            break;
         }
 
         return command;
