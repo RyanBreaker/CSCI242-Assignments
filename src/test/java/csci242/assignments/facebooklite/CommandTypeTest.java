@@ -1,10 +1,9 @@
 package csci242.assignments.facebooklite;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * Short description.
@@ -18,12 +17,6 @@ import static org.hamcrest.CoreMatchers.*;
  * @bugs None
  */
 public class CommandTypeTest {
-
-    @Before
-    public void setUp() {
-
-    }
-
     @Test
     public void testGetType() {
         CommandType valid = CommandType.NEW_PERSON;
@@ -32,6 +25,6 @@ public class CommandTypeTest {
 
     @Test
     public void testGetType_invalid() {
-        assertNull(CommandType.getType('Q', 3));
+        assertThat(CommandType.getType('Q', 3), equalTo(CommandType.INVALID));
     }
 }
