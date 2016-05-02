@@ -1,5 +1,7 @@
 package csci242.assignments.facebooklite;
 
+import java.util.Arrays;
+
 /**
  * Short description.
  * <p>
@@ -11,13 +13,21 @@ package csci242.assignments.facebooklite;
  * @edu.uwp.cs.242.assignment 5
  * @bugs None
  */
-class Command {
-    final Params params;
-    final CommandType type;
+class Params {
+    private String[] params;
 
-    Command(CommandType type, String... params) {
-        this.type = type;
-        this.params = new Params(params);
+    Params(String... params) {
+        this.params = params;
+    }
+
+    int count() {
+        return params.length;
+    }
+
+    String get(int n) {
+        if (n > count() || count() < 0)
+            throw new IndexOutOfBoundsException();
+        return params[n];
     }
 
     @Override
@@ -25,14 +35,14 @@ class Command {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Command command = (Command) o;
-        return type == command.type && params.equals(command.params);
+        Params params1 = (Params) o;
+
+        return Arrays.equals(params, params1.params);
+
     }
 
     @Override
     public int hashCode() {
-        int result = params.hashCode();
-        result = 31 * result + type.hashCode();
-        return result;
+        return Arrays.hashCode(params);
     }
 }
