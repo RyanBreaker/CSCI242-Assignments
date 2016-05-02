@@ -14,7 +14,6 @@ import java.util.Set;
  * @edu.uwp.cs.242.assignment 5
  * @bugs None
  */
-@SuppressWarnings("SimplifiableIfStatement")
 class Person {
     final String name;
     private Set<Person> friends = new HashSet<>();
@@ -25,21 +24,15 @@ class Person {
 
 
     boolean addFriend(Person person) {
-        if (person == this || person.friends.contains(this))
-            return false;
-        return friends.add(person);
+        return friends.add(person) && person.friends.add(this);
     }
 
     boolean removeFriend(Person person) {
-        if (person == this)
-            return false;
-        return friends.remove(person) || person.friends.remove(this);
+        return friends.remove(person) && person.friends.remove(this);
     }
 
     boolean isFriendsWith(Person person) {
-        if (person == this)
-            return false;
-        return friends.contains(person) || person.friends.contains(this);
+        return friends.contains(person);
     }
 
     @Override
