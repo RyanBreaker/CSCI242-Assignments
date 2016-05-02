@@ -99,17 +99,6 @@ public class PersonTest {
     }
 
     @Test
-    public void testRemoveFriend_fromOther() {
-        addOtherPersonToTestPerson();
-
-        boolean removedFromOther = otherPerson.removeFriend(testPerson);
-        boolean removedFromTest = testPerson.removeFriend(otherPerson);
-
-        assertTrue(removedFromOther);
-        assertFalse(removedFromTest);;
-    }
-
-    @Test
     public void testRemoveFriend_self() {
         boolean testPersonRemovedFromSelf = testPerson.removeFriend(testPerson);
         assertFalse(testPersonRemovedFromSelf);
