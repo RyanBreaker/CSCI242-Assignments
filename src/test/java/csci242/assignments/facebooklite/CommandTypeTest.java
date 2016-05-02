@@ -20,7 +20,8 @@ public class CommandTypeTest {
     @Test
     public void testGetType() {
         CommandType valid = CommandType.NEW_PERSON;
-        assertThat(valid, equalTo(CommandType.getType(valid.KEY, valid.PARAMS)));
+        CommandType result = CommandType.getType(valid.KEY, valid.PARAMS);
+        assertThat(result, equalTo(valid));
     }
 
     @Test
