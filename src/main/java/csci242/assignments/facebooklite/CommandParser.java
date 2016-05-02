@@ -35,17 +35,18 @@ class CommandParser {
             char commandChar;
             String[] line = in.nextLine().split("\\s+");
 
+
             if (line[0].length() != 1) {
-                System.out.println("Error: First symbol in line not a command!");
+                System.out.printf("Error: '%s' is not a valid command\n", line[0]);
                 continue;
             }
 
             commandChar = line[0].toUpperCase().charAt(0);
             if (commandChar == 'X') return new Command(CommandType.EXIT);
 
-            type = CommandType.getType(commandChar, line.length - 1);
-            if (type == null) {
-                System.out.println("Error: Bad format for command " + commandChar);
+            type = CommandType.getType(commandChar, line.length - 2);
+            if (type == CommandType.INVALID) {
+                System.out.printf("Error: Bad format for command '%c'\n", commandChar);
                 continue;
             }
 

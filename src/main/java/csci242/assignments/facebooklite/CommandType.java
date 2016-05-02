@@ -17,7 +17,8 @@ enum CommandType {
     UNFRIEND('U', 2),
     LIST_FRIENDS('L', 1),
     QUERY_FRIENDS('Q', 2),
-    EXIT('X', 0);
+    EXIT('X', 0),
+    INVALID('\0' ,0);
 
     final char KEY;
     final int PARAMS;
@@ -32,6 +33,6 @@ enum CommandType {
                 return c;
             }
         }
-        return null;
+        return INVALID;
     }
 }
