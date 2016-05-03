@@ -1,5 +1,6 @@
 package csci242.assignments.facebooklite;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,10 @@ class Person {
 
     boolean isFriendsWith(Person person) {
         return friends.contains(person);
+    }
+
+    Set<Person> getFriends() {
+        return Collections.unmodifiableSet(friends);
     }
 
     @Override

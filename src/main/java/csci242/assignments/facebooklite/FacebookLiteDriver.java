@@ -55,22 +55,61 @@ public class FacebookLiteDriver {
 
         while(!done) {
             Command c = parser.getCommand();
+            String name1 = c.params.getFirst();
+            String name2 = c.params.getSecond();
+
+            print("'Command: " + c.type.KEY);
+            if (name1 != null && name2 == null)
+                print(" " + c.params.getFirst());
+            else if (name2 != null)
+                print(" " + c.params.getFirst() + " " + c.params.getSecond());
+            print("' > ");
+
             switch (c.type) {
                 case EXIT:
                     done = true;
                     break;
                 case NEW_PERSON:
-                    people.add(new Person(c.params.getFirst()));
+                    if (people.add(new Person(c.params.getFirst())))
+                        println("Added " + name1 + ".");
+                    else
+                        println("Error: " + name1 + "already exists!");
                     break;
                 case ADD_FRIEND:
-                    addFriend(c.params.getFirst(), c.params.getSecond());
+                    if (addFriend(c.params.getFirst(), c.params.getSecond()))
+                        println(and(name1, name2) + "are now friends.");
+                    else
+                        println("Error: " + and(name1, name2) +
+                                "are already friends!");
                     break;
                 case UNFRIEND:
-                    unfriend(c.params.getFirst(), c.params.getSecond());
+                    if (unFriend(c.params.getFirst(), c.params.getSecond()))
+                        println(and(name1, name2) + "are no longer friends.");
+                    else
+                        println("Error: " + and(name1, name2) +
+                                "weren't already friends!");
                     break;
+                case LIST_FRIENDS:
+                    Person p = getPerson(name1);
+                    if (p == null) {
+                        println("Error: " + name1 + " does not exist!");
+                        break;
+                    }
 
+                    //noinspection ConstantConditions
+                    char end = name1.charAt(name1.length()-1);
+                    if (end == 's' || end == 'S')
+                        print("' friends: ");
+                    else
+                        print("'s friends: ");
+                    println(list(p));
+                    break;
             }
         }
+    }
+
+    private static String and(String name1, String name2) {
+        return name1 + " and " + name2 + " ";
     }
 
     private static class Pair {
@@ -99,17 +138,37 @@ public class FacebookLiteDriver {
         }
     }
 
+    private static Person getPerson(String name) {
+        for (Person p : people) {
+            if (p.name.equals(name))
+                return p;
+        }
+        return null;
+    }
+
     private static boolean addFriend(String name1, String name2) {
         Pair pair = Pair.getPeople(name1, name2);
         return pair != null && pair.p1.addFriend(pair.p2);
     }
 
-    private static boolean unfriend(String name1, String name2) {
+    private static boolean unFriend(String name1, String name2) {
         Pair pair = Pair.getPeople(name1, name2);
         return pair != null && pair.p1.removeFriend(pair.p2);
     }
 
+    private static String list(Person person) {
+        String friends = "[ ";
+        for (Person p : person.getFriends())
+            friends += p.name + " ";
+        friends += "]";
+
+        return friends;
+    }
+
     private static void println(String line) {
         System.out.println(line);
+    }
+    private static void print(String line) {
+        System.out.print(line);
     }
 }
