@@ -24,10 +24,16 @@ class Params {
         return params.length;
     }
 
-    String get(int n) {
-        if (n > count() || count() < 0)
-            throw new IndexOutOfBoundsException();
-        return params[n];
+    String getFirst() {
+        if (count() == 0)
+            return null;
+        return params[0];
+    }
+
+    String getSecond() {
+        if (count() != 2)
+            return null;
+        return params[1];
     }
 
     @Override

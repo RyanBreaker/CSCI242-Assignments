@@ -16,12 +16,11 @@ import java.util.Set;
  */
 class Person {
     final String name;
-    private Set<Person> friends = new HashSet<>();
+    private final Set<Person> friends = new HashSet<>();
 
     Person(String name) {
         this.name = name;
     }
-
 
     boolean addFriend(Person person) {
         return friends.add(person) && person.friends.add(this);
@@ -39,5 +38,19 @@ class Person {
     public String toString() {
         return String.format("Name: %s, Number of friends: %d",
                 name, friends.size());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+        return name.equals(person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

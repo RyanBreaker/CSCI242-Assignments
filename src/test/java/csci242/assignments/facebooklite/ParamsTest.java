@@ -3,6 +3,8 @@ package csci242.assignments.facebooklite;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -27,19 +29,47 @@ public class ParamsTest {
     }
 
     @Test
-    public void testGet() {
-        int i = 0;
-        String result = testParams.get(i);
-        assertThat(result, equalTo(testStrings[i]));
+    public void testGetFirst() {
+        String actual = testStrings[0];
+        String result = testParams.getFirst();
+        assertThat(actual, equalTo(result));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testGet_outOfBounds() {
-        testParams.get(testStrings.length);
+    @Test
+    public void testGetFirst_null() {
+        testParams = new Params();
+        assertNull(testParams.getFirst());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testGet_negative() {
-        testParams.get(-1);
+    @Test
+    public void testGetSecond() {
+        String actual = testStrings[1];
+        String result = testParams.getSecond();
+        assertThat(actual, equalTo(result));
+    }
+
+    @Test
+    public void testGetSecond_null() {
+        testParams = new Params(testStrings[0]);
+        assertNull(testParams.getSecond());
+    }
+
+    @Test
+    public void testEquals() {
+        Params otherParams = new Params(testStrings);
+        assertThat(testParams, equalTo(otherParams));
+    }
+
+    @Test
+    public void testEquals_empty() {
+        Params otherParams = new Params();
+        testParams = new Params();
+        assertThat(testParams, equalTo(otherParams));
+    }
+
+    @Test
+    public void testEquals_not() {
+        Params otherParams = new Params(testStrings[0]);
+        assertThat(testParams, not(equalTo(otherParams)));
     }
 }

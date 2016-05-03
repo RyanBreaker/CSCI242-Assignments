@@ -12,12 +12,13 @@ package csci242.assignments.facebooklite;
  * @bugs None
  */
 class Command {
-    final Params params;
     final CommandType type;
+    final Params params;
 
     Command(CommandType type, String... params) {
         this.type = type;
         this.params = new Params(params);
+
     }
 
     @Override
