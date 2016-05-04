@@ -3,6 +3,7 @@ package csci242.assignments.facebooklite;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class FacebookLiteDriver {
         Mode mode = null;
 
         CommandParser parser = null;
-        boolean done = false;
+        boolean running = true;
 
         println("<--| Facebook Lite |-->");
         while(mode == null) {
@@ -45,7 +46,7 @@ public class FacebookLiteDriver {
         if (mode == Mode.FILE) {
             while (parser == null) {
                 try {
-                    println("Enter filename");
+                    println("Enter filename:");
                     parser = new CommandParser(new File(in.nextLine()));
                 } catch (FileNotFoundException e) {
                     println("Invalid file");
@@ -53,59 +54,99 @@ public class FacebookLiteDriver {
             }
         } else parser = new CommandParser();
 
-        while(!done) {
-            Command c = parser.getCommand();
-            String name1 = c.params.getFirst();
-            String name2 = c.params.getSecond();
+        // Run loop
+        while(running) running = run(parser);
+    }
 
-            print("'Command: " + c.type.KEY);
-            if (name1 != null && name2 == null)
-                print(" " + c.params.getFirst());
-            else if (name2 != null)
-                print(" " + c.params.getFirst() + " " + c.params.getSecond());
-            print("' > ");
+    /**
+     * The primary method for running functionality of the program.
+     * @param parser The CommandParser to use.
+     * @return {@code false} if an EXIT command was given, {@code true} otherwise.
+     */
+    private static boolean run(CommandParser parser) {
+        Command c = parser.getCommand();
+        String name1 = c.params.getFirst();
+        String name2 = c.params.getSecond();
+        Optional<String> error = Optional.empty();
 
-            switch (c.type) {
-                case EXIT:
-                    done = true;
-                    break;
-                case NEW_PERSON:
-                    if (people.add(new Person(c.params.getFirst())))
-                        println("Added " + name1 + ".");
-                    else
-                        println("Error: " + name1 + "already exists!");
-                    break;
-                case ADD_FRIEND:
-                    if (addFriend(c.params.getFirst(), c.params.getSecond()))
-                        println(and(name1, name2) + "are now friends.");
-                    else
-                        println("Error: " + and(name1, name2) +
-                                "are already friends!");
-                    break;
-                case UNFRIEND:
-                    if (unFriend(c.params.getFirst(), c.params.getSecond()))
-                        println(and(name1, name2) + "are no longer friends.");
-                    else
-                        println("Error: " + and(name1, name2) +
-                                "weren't already friends!");
-                    break;
-                case LIST_FRIENDS:
-                    Person p = getPerson(name1);
-                    if (p == null) {
-                        println("Error: " + name1 + " does not exist!");
-                        break;
-                    }
-
-                    //noinspection ConstantConditions
-                    char end = name1.charAt(name1.length()-1);
-                    if (end == 's' || end == 'S')
-                        print("' friends: ");
-                    else
-                        print("'s friends: ");
-                    println(list(p));
-                    break;
-            }
+        // Print information
+        print("'Command: " + c.type.KEY);
+        if (name1 != null && name2 == null)
+            print(" " + name1);
+        else if (name2 != null) {
+            if (name2.equals(name1))
+                error = Optional.of("Error: Given names are the same!");
+            print(" " + name1 + " " + name2);
         }
+        print("' > ");
+
+        if (error.isPresent()) {
+            println(error.get());
+            return true;
+        }
+
+        if (c.type == CommandType.EXIT) {
+            println("Leaving FacebookLite.");
+            return false;
+        }
+
+
+
+        switch (c.type) {
+            case NEW_PERSON:
+                if (people.add(new Person(c.params.getFirst())))
+                    println("Added " + name1 + ".");
+                else
+                    println("Error: " + name1 + " already exists!");
+                break;
+
+            case ADD_FRIEND:
+                if (addFriend(c.params.getFirst(), c.params.getSecond()))
+                    println(and(name1, name2) + "are now friends.");
+                else
+                    println("Error: " + and(name1, name2) +
+                            "are already friends!");
+                break;
+
+            case UNFRIEND:
+                if (unFriend(c.params.getFirst(), c.params.getSecond()))
+                    println(and(name1, name2) + "are no longer friends.");
+                else
+                    println("Error: " + and(name1, name2) +
+                            "weren't already friends!");
+                break;
+
+            case LIST_FRIENDS:
+                Person p = getPerson(name1);
+                if (p == null) {
+                    println("Error: " + name1 + " does not exist!");
+                    break;
+                }
+                //noinspection ConstantConditions
+                char end = name1.charAt(name1.length()-1);
+                if (end == 's' || end == 'S')
+                    print("' friends: ");
+                else
+                    print("'s friends: ");
+                println(list(p));
+                break;
+
+            case QUERY_FRIENDS:
+                Optional<Person> op1 = Optional.ofNullable(getPerson(name1));
+                Optional<Person> op2 = Optional.ofNullable(getPerson(name2));
+
+                if (op1.isPresent() && op2.isPresent()) {
+                    boolean areFriends = op1.get().isFriendsWith(op2.get());
+                    println(and(name1, name2) + "are" +
+                            (areFriends ? " " : " NOT ") + "friends.");
+                } else {
+                    if (!op1.isPresent())
+                        println("Error: " + name1 + " does not exist!");
+                    if (!op2.isPresent())
+                        println("Error: " + name2 + " does not exist!");
+                }
+        }
+        return true;
     }
 
     private static String and(String name1, String name2) {
