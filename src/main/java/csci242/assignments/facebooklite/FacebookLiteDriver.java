@@ -90,8 +90,6 @@ public class FacebookLiteDriver {
             return false;
         }
 
-
-
         switch (c.type) {
             case NEW_PERSON:
                 if (people.add(new Person(c.params.getFirst())))
