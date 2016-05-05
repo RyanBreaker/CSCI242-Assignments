@@ -123,9 +123,9 @@ public class FacebookLiteDriver {
                 //noinspection ConstantConditions
                 char end = name1.charAt(name1.length()-1);
                 if (end == 's' || end == 'S')
-                    print("' friends: ");
+                    print(name1 + "' friends: ");
                 else
-                    print("'s friends: ");
+                    print(name1 + "'s friends: ");
                 println(list(p));
                 break;
 

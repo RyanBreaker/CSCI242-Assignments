@@ -44,7 +44,7 @@ class CommandParser {
             commandChar = line[0].toUpperCase().charAt(0);
             if (commandChar == 'X') return new Command(CommandType.EXIT);
 
-            type = CommandType.getType(commandChar, line.length - 2);
+            type = CommandType.getType(commandChar, line.length - 1);
             if (type == CommandType.INVALID) {
                 System.out.printf("Error: Bad format for command '%c'\n", commandChar);
                 continue;
